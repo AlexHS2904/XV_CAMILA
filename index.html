@@ -4,30 +4,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Mis XV Años — Camila | 20 de Marzo de 2027</title>
+<title>Mis XV Años — Camila | 20 de Febrero de 2027</title>
 
-<link rel="stylesheet" href="assets/css/styles.css"/>
+<link rel="stylesheet" href="assets/css/styles.css" />
 <!-- Personalización ligera: conserva la textura del papel bajo el color elegido. -->
-<style>
-  #dressCard { position: relative; isolation: isolate; overflow: hidden; }
-  #dressCard::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: var(--dress-tint, transparent);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 0;
-    transition: opacity .5s ease, background-color .5s ease;
-  }
-  #dressCard[data-selected-color]::before { opacity: 1; }
-  #dressCard[data-selected-color] { background-image: url("assets/images/fondo2.webp"); }
-  #dressCard > * { position: relative; z-index: 1; }
-  @media (prefers-reduced-motion: reduce) {
-    #dressCard::before { transition: none; }
-  }
-</style>
+
 
 </head>
 <body class="selection:bg-royal-200 selection:text-royal-900">
@@ -52,7 +33,7 @@
 <!-- Top Watercolor Floral Banner -->
 <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center hero-layout">
 <!-- Left Column: Emblem & Event Title (Inspired by image_2.png & ednayroberto.com) -->
-<div class="lg:col-span-6 text-center lg:text-left space-y-6 order-2 lg:order-1 hero-copy" data-reveal="soft" style=";--reveal-delay:0ms">
+<div class="lg:col-span-6 text-center lg:text-left space-y-6 order-2 lg:order-1 hero-copy layout-attr-1" data-reveal="soft">
 <div class="space-y-2">
 <p class="font-editorial italic text-xl sm:text-2xl text-royal-500">Mis</p>
 <h1 class="font-editorial font-normal text-6xl sm:text-8xl tracking-tight text-royal-600 leading-none">
@@ -67,7 +48,7 @@
 <div class="date-layout">
 <div class="px-6 py-3 rounded-2xl bg-white/90 border border-royal-200 shadow-sm text-center">
 <span class="block text-[10px] uppercase tracking-[0.25em] text-sage-700 font-semibold">Save the Date</span>
-<span class="font-editorial text-2xl sm:text-3xl font-semibold text-royal-600 tracking-widest" id="heroDateDisplay">20 • MARZO • 2027</span>
+<span class="font-editorial text-2xl sm:text-3xl font-semibold text-royal-600 tracking-widest" id="heroDateDisplay">20 • FEBRERO • 2027</span>
 </div>
 <div class="flex flex-wrap justify-center gap-2.5">
 <button class="px-5 py-3 rounded-full bg-royal-600 hover:bg-royal-700 text-white text-xs uppercase tracking-widest font-medium transition shadow-md flex items-center gap-2" id="btnSaveCalendar" type="button">
@@ -80,7 +61,8 @@
 </div>
 </div>
 <!-- Audio Callout like ednayroberto.com -->
-<!-- CANCIONAQUI: pon tu mp3 aquí, por ejemplo: <audio id="bgMusic" src="cancion.mp3" preload="none" loop></audio> -->
+<!-- Música real del vals: coloca vals.mp3 en assets/audio/ antes de publicar. -->
+<audio id="bgMusic" src="assets/audio/vals.mp3" preload="none" loop></audio>
 <div class="pt-2 flex items-center justify-center lg:justify-start gap-3 text-xs text-royal-600">
 <button class="inline-flex items-center gap-2 text-royal-600 hover:text-royal-800 font-medium underline underline-offset-4" id="btnHeroMusic" type="button"><span aria-hidden="true" id="musicWaves"><svg aria-hidden="true" fill="none" height="21" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24" width="21"><path d="M9 18V5l11-2v13M9 8l11-2"></path><ellipse cx="6" cy="18" rx="3" ry="2"></ellipse><ellipse cx="17" cy="16" rx="3" ry="2"></ellipse></svg></span><span id="musicLabel">Escucha mi vals</span></button>
 </div>
@@ -90,11 +72,11 @@
 <div class="relative max-w-md mx-auto">
 <!-- Decorative Watercolor Emblem Badge in Corner -->
 <div class="absolute -top-5 -left-5 z-20 w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg animate-float bg-cream-200 hero-emblem">
-<img alt="Emblema floral Mis XV años Camila 20.03.2027" class="w-full h-full object-cover" src="assets/images/camila-emblema.jpg"/>
+<img alt="Emblema floral Mis XV años Camila 20.02.2027" class="w-full h-full object-cover" src="assets/images/camila-emblema.webp"/>
 </div>
 <!-- Main Hero Photo Card -->
 <div class="relative rounded-t-[180px] rounded-b-3xl overflow-hidden border-8 border-white shadow-2xl bg-cream-100 aspect-[3/4] hero-arch">
-<img alt="Foto principal de la quinceañera Camila junto a arreglo floral azul y blanco" class="w-full h-full object-cover" id="heroMainImg" src="assets/images/camila-portada.jpg"/>
+<img alt="Foto principal de la quinceañera Camila junto a arreglo floral azul y blanco" class="w-full h-full object-cover" id="heroMainImg" src="assets/images/camila-portada.webp"/>
 <div class="absolute inset-0 bg-gradient-to-t from-royal-900/50 via-transparent to-transparent"></div>
 <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
 <div>
@@ -109,28 +91,28 @@
 </div>
 </div>
 </section>
-<!-- COUNTDOWN TIMER SECTION (Contador a Marzo del 2027) -->
+<!-- COUNTDOWN TIMER SECTION (Contador a Febrero del 2027) -->
 <section class="py-12 bg-royal-700 text-cream-50 relative overflow-hidden" data-invitation="" id="cuenta-regresiva">
 <div class="max-w-4xl mx-auto px-4 text-center space-y-6 relative z-10">
-<div class="space-y-1" data-reveal="soft" style=";--reveal-delay:0ms">
+<div class="space-y-1 layout-attr-1" data-reveal="soft">
 <p class="text-xs uppercase tracking-[0.3em] text-royal-200">Cuenta Regresiva</p>
 <h2 class="font-editorial text-3xl sm:text-4xl font-normal text-white">Falta cada vez menos para el gran día</h2>
-<p class="text-xs text-royal-200" id="countdownTargetLabel">Sábado 20 de Marzo de 2027 • 1:00 P.M.</p>
+<p class="text-xs text-royal-200" id="countdownTargetLabel">Sábado 20 de Febrero de 2027 • 1:00 P.M.</p>
 </div>
 <div class="grid grid-cols-4 gap-3 sm:gap-6 max-w-2xl mx-auto pt-2">
-<div class="bg-royal-800/80 border border-royal-400/40 rounded-2xl py-4 px-2 sm:p-6 shadow-inner" data-reveal="soft" style=";--reveal-delay:0ms">
+<div class="bg-royal-800/80 border border-royal-400/40 rounded-2xl py-4 px-2 sm:p-6 shadow-inner layout-attr-1" data-reveal="soft">
 <span class="font-editorial text-3xl sm:text-6xl font-semibold text-white block leading-none" id="cdDays">156</span>
 <span class="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-royal-200 mt-2 block">Días</span>
 </div>
-<div class="bg-royal-800/80 border border-royal-400/40 rounded-2xl py-4 px-2 sm:p-6 shadow-inner" data-reveal="soft" style=";--reveal-delay:70ms">
+<div class="bg-royal-800/80 border border-royal-400/40 rounded-2xl py-4 px-2 sm:p-6 shadow-inner layout-attr-2" data-reveal="soft">
 <span class="font-editorial text-3xl sm:text-6xl font-semibold text-white block leading-none" id="cdHours">00</span>
 <span class="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-royal-200 mt-2 block">Horas</span>
 </div>
-<div class="bg-royal-800/80 border border-royal-400/40 rounded-2xl py-4 px-2 sm:p-6 shadow-inner" data-reveal="soft" style=";--reveal-delay:140ms">
+<div class="bg-royal-800/80 border border-royal-400/40 rounded-2xl py-4 px-2 sm:p-6 shadow-inner layout-attr-3" data-reveal="soft">
 <span class="font-editorial text-3xl sm:text-6xl font-semibold text-white block leading-none" id="cdMinutes">00</span>
 <span class="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-royal-200 mt-2 block">Min</span>
 </div>
-<div class="bg-royal-800/80 border border-royal-400/40 rounded-2xl py-4 px-2 sm:p-6 shadow-inner" data-reveal="soft" style=";--reveal-delay:210ms">
+<div class="bg-royal-800/80 border border-royal-400/40 rounded-2xl py-4 px-2 sm:p-6 shadow-inner layout-attr-4" data-reveal="soft">
 <span class="font-editorial text-3xl sm:text-6xl font-semibold text-white block leading-none" id="cdSeconds">00</span>
 <span class="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-royal-200 mt-2 block">Seg</span>
 </div>
@@ -140,13 +122,13 @@
 <!-- PARENTS & GODPARENTS SECTION (Con la bendición de Dios, Padres y Padrinos) -->
 <section id="familia" class="py-16 px-4 bg-cream-100 border-b border-royal-200/50" data-invitation="">
 <div class="max-w-4xl mx-auto text-center space-y-10">
-<div class="space-y-2" data-reveal="soft" style=";--reveal-delay:0ms">
-<p class="text-xs uppercase tracking-[0.28em] text-sage-700 font-semibold">Con la bendición de Dios y el amor de mi familia</p>
-<h2 class="font-cursive text-5xl text-royal-600">Quienes me acompañan</h2>
+<div class="space-y-2 layout-attr-1" data-reveal="soft">
+<p class="text-xs uppercase tracking-[0.28em] text-sage-700 font-semibold">Con la bendición de Dios, celebro mis XV años junto a</p>
+<h2 class="font-cursive text-5xl text-royal-600">Mi familia</h2>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <!-- Padres Card -->
-<div class="floral-card rounded-3xl p-8 space-y-4" data-reveal="left" style=";--reveal-delay:0ms">
+<div class="floral-card rounded-3xl p-8 space-y-4 layout-attr-1" data-reveal="left">
 <div class="w-10 h-10 rounded-full bg-royal-100 text-royal-600 flex items-center justify-center mx-auto">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </div>
@@ -159,7 +141,7 @@
 <p class="text-xs text-royal-500 pt-2">Gracias por guiar cada uno de mis pasos con amor incondicional.</p>
 </div>
 <!-- Padrinos Card -->
-<div class="floral-card rounded-3xl p-8 space-y-4" data-reveal="right" style=";--reveal-delay:0ms">
+<div class="floral-card rounded-3xl p-8 space-y-4 layout-attr-1" data-reveal="right">
 <div class="w-10 h-10 rounded-full bg-royal-100 text-royal-600 flex items-center justify-center mx-auto">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </div>
@@ -177,18 +159,18 @@
 <!-- FOTOS DESTACADAS DE LA QUINCEAÑERA (Editorial Portraits Section) -->
 <section class="py-16 px-4 bg-cream-50" data-invitation="" id="retratos">
 <div class="max-w-6xl mx-auto space-y-10">
-<div class="text-center max-w-2xl mx-auto space-y-2" data-reveal="soft" style=";--reveal-delay:0ms">
+<div class="text-center max-w-2xl mx-auto space-y-2 layout-attr-1" data-reveal="soft">
 <span class="text-xs uppercase tracking-[0.25em] text-sage-700 font-semibold">Un sueño hecho realidad</span>
 <h2 class="font-cursive text-5xl sm:text-6xl text-royal-600">La Quinceañera</h2>
 <p class="text-sm text-royal-700/80">
           Dejo atrás mi infancia con gratitud y abro los brazos a una nueva etapa llena de sueños, rodeada de las personas que más quiero.
         </p>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch" data-reveal="photo" id="portraitTrack" style=";--reveal-delay:0ms">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch layout-attr-1" data-reveal="photo" id="portraitTrack">
 <!-- Portrait 1 -->
 <div class="floral-card rounded-3xl overflow-hidden flex flex-col">
 <div class="relative aspect-[3/4] overflow-hidden bg-cream-200 group">
-<img id="portraitImg1" alt="Retrato de Camila con ramo de hortensias blancas y flores azules" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer lightbox-trigger" data-caption="Camila — Sesión de XV Años con ramo de hortensias blancas, rosas crema y delphinium azul" src="assets/images/camila-retrato-1.jpg"/>
+<img id="portraitImg1" alt="Retrato de Camila con ramo de hortensias blancas y flores azules" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer lightbox-trigger" data-caption="Camila — Sesión de XV Años con ramo de hortensias blancas, rosas crema y delphinium azul" src="assets/images/camila-retrato-01.webp"/>
 </div>
 <div class="p-5 text-center space-y-1 flex-1 flex flex-col justify-center">
 <span class="text-[10px] uppercase tracking-[0.2em] text-sage-700 font-semibold">Ilusión</span>
@@ -198,17 +180,17 @@
 <!-- Centerpiece & Emblem Story Card -->
 <div class="floral-card rounded-3xl overflow-hidden flex flex-col border-2 border-royal-300/60">
 <div class="relative aspect-[3/4] overflow-hidden bg-cream-200 group">
-<img data-same-as="heroMainImg" alt="Camila en hacienda colonial" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer lightbox-trigger" data-caption="Camila — Portada oficial Mis XV Años (20 de Marzo de 2027)" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+<img id="portraitImg2" alt="Retrato de Camila en la escalinata de la hacienda colonial" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer lightbox-trigger" data-caption="Camila — Escalinata de la Hacienda (20 de Febrero de 2027)" src="assets/images/camila-retrato-02.webp"/>
 </div>
 <div class="p-5 text-center space-y-1 flex-1 flex flex-col justify-center bg-royal-600 text-white">
-<span class="text-[10px] uppercase tracking-[0.2em] text-royal-200 font-semibold">20 • 03 • 2027</span>
+<span class="text-[10px] uppercase tracking-[0.2em] text-royal-200 font-semibold">20 • 02 • 2027</span>
 <p class="font-editorial italic text-xl">«Gracias por ser parte de mi historia al cumplir XV años.»</p>
 </div>
 </div>
 <!-- Portrait 3 -->
 <div class="floral-card rounded-3xl overflow-hidden flex flex-col">
 <div class="relative aspect-[3/4] overflow-hidden bg-cream-200 group">
-<img id="portraitImg3" alt="Retrato de Camila en jardín de hacienda" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer lightbox-trigger" data-caption="Camila — Jardines de la Hacienda" src="assets/images/camila-retrato-2.jpg"/>
+<img id="portraitImg3" alt="Retrato de Camila en jardín de hacienda" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer lightbox-trigger" data-caption="Camila — Jardines de la Hacienda" src="assets/images/camila-retrato-03.webp"/>
 </div>
 <div class="p-5 text-center space-y-1 flex-1 flex flex-col justify-center">
 <span class="text-[10px] uppercase tracking-[0.2em] text-sage-700 font-semibold">Gratitud</span>
@@ -225,41 +207,41 @@
       <span class="itinerary-kicker">Programa del día</span>
       <h2 id="itineraryTitle" class="itinerary-title font-cursive">Itinerario</h2>
       <div class="itinerary-ornament" aria-hidden="true"><span></span><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3v5M14 20v5M3 14h5M20 14h5M6.4 6.4l3.6 3.6M18 18l3.6 3.6M21.6 6.4L18 10M10 18l-3.6 3.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="m14 10 4 4-4 4-4-4 4-4Z" stroke="currentColor" stroke-width="1.2"/></svg><span></span></div>
-      <p class="itinerary-date">Sábado 20 de marzo de 2027</p>
+      <p class="itinerary-date">Sábado 20 de febrero de 2027</p>
     </header>
     <ol class="itinerary-events">
-      <li class="itinerary-item" data-reveal="left" style="--reveal-delay:0ms">
-        <time class="itinerary-time" datetime="2027-03-20T13:00">1:00 P.M.</time>
+      <li class="itinerary-item layout-attr-1" data-reveal="left">
+        <time class="itinerary-time" datetime="2027-02-20T13:00">1:00 P.M.</time>
         <span class="itinerary-axis" aria-hidden="true"></span>
         <img class="itinerary-icon" src="assets/images/itinerario/ceremonia.webp" width="178" height="170" alt="" loading="lazy" decoding="async"/>
         <div class="itinerary-copy"><h3>Ceremonia</h3><p>Una oración de gratitud por esta nueva etapa.</p></div>
       </li>
-      <li class="itinerary-item" data-reveal="left" style="--reveal-delay:55ms">
-        <time class="itinerary-time" datetime="2027-03-20T15:00">3:00 P.M.</time>
+      <li class="itinerary-item layout-attr-5" data-reveal="left">
+        <time class="itinerary-time" datetime="2027-02-20T15:00">3:00 P.M.</time>
         <span class="itinerary-axis" aria-hidden="true"></span>
         <img class="itinerary-icon" src="assets/images/itinerario/bienvenida.webp" width="178" height="170" alt="" loading="lazy" decoding="async"/>
         <div class="itinerary-copy"><h3>Bienvenida</h3><p>Nos reunimos para celebrar mis quince años.</p></div>
       </li>
-      <li class="itinerary-item" data-reveal="left" style="--reveal-delay:110ms">
-        <time class="itinerary-time" datetime="2027-03-20T18:00">6:00 P.M.</time>
+      <li class="itinerary-item layout-attr-6" data-reveal="left">
+        <time class="itinerary-time" datetime="2027-02-20T18:00">6:00 P.M.</time>
         <span class="itinerary-axis" aria-hidden="true"></span>
         <img class="itinerary-icon" src="assets/images/itinerario/vals.webp" width="178" height="170" alt="" loading="lazy" decoding="async"/>
         <div class="itinerary-copy"><h3>Mi vals</h3><p>Un momento para compartir con quienes más quiero.</p></div>
       </li>
-      <li class="itinerary-item" data-reveal="left" style="--reveal-delay:165ms">
-        <time class="itinerary-time" datetime="2027-03-20T18:30">6:30 P.M.</time>
+      <li class="itinerary-item layout-attr-7" data-reveal="left">
+        <time class="itinerary-time" datetime="2027-02-20T18:30">6:30 P.M.</time>
         <span class="itinerary-axis" aria-hidden="true"></span>
         <img class="itinerary-icon" src="assets/images/itinerario/bailes.webp" width="178" height="170" alt="" loading="lazy" decoding="async"/>
         <div class="itinerary-copy"><h3>Bailes de la quinceañera</h3><p>Música, sorpresas y una coreografía muy especial.</p></div>
       </li>
-      <li class="itinerary-item" data-reveal="left" style="--reveal-delay:220ms">
-        <time class="itinerary-time" datetime="2027-03-20T19:00">7:00 P.M.</time>
+      <li class="itinerary-item layout-attr-8" data-reveal="left">
+        <time class="itinerary-time" datetime="2027-02-20T19:00">7:00 P.M.</time>
         <span class="itinerary-axis" aria-hidden="true"></span>
         <img class="itinerary-icon" src="assets/images/itinerario/cena.webp" width="178" height="170" alt="" loading="lazy" decoding="async"/>
         <div class="itinerary-copy"><h3>Cena</h3><p>Compartamos la mesa y una noche inolvidable.</p></div>
       </li>
-      <li class="itinerary-item" data-reveal="left" style="--reveal-delay:250ms">
-        <time class="itinerary-time" datetime="2027-03-20T20:00">8:00 P.M.</time>
+      <li class="itinerary-item layout-attr-9" data-reveal="left">
+        <time class="itinerary-time" datetime="2027-02-20T20:00">8:00 P.M.</time>
         <span class="itinerary-axis" aria-hidden="true"></span>
         <img class="itinerary-icon" src="assets/images/itinerario/fiesta.webp" width="178" height="170" alt="" loading="lazy" decoding="async"/>
         <div class="itinerary-copy"><h3>¡A bailar!</h3><p>La pista nos espera. ¡Que comience la fiesta!</p></div>
@@ -267,16 +249,19 @@
     </ol>
   </div>
 </section>
+<!-- FOTOS ENTRE SECCIONES (2): foto panorámica de lado a lado -->
+<section class="photo-wide" data-invitation="" id="fotos-2" aria-label="Foto de Camila">
+  <img class="lightbox-trigger layout-attr-1" src="assets/images/camila-foto-panoramica.webp" alt="Vista panorámica de Camila en el patio iluminado de la hacienda" data-caption="Camila — Patio Central de la Hacienda" data-reveal="soft" loading="lazy" decoding="async"/>
+</section>
 <!-- UBICACIÓN ÚNICA: capilla y recepción en el mismo recinto -->
 <section class="py-16 px-4 bg-cream-50" data-invitation="" id="ubicaciones">
   <div class="max-w-4xl mx-auto space-y-10">
-    <div class="text-center space-y-2" data-reveal="soft" style="--reveal-delay:0ms">
-      <span class="text-xs uppercase tracking-[0.25em] text-sage-700 font-semibold">Un mismo lugar, dos momentos</span>
+    <div class="text-center space-y-2 layout-attr-1" data-reveal="soft">
+      <span class="text-xs uppercase tracking-[0.25em] text-sage-700 font-semibold">Un mismo lugar, dos momentos especiales</span>
       <h2 class="font-cursive text-5xl text-royal-600">Ubicación</h2>
-      <p class="text-sm text-royal-700/80">La ceremonia y la recepción serán en el mismo recinto.</p>
     </div>
 
-    <div class="floral-card rounded-3xl overflow-hidden" data-reveal="soft" style="--reveal-delay:80ms">
+    <div class="floral-card rounded-3xl overflow-hidden layout-attr-10" data-reveal="soft">
       <div class="p-6 sm:p-8 space-y-6">
         <div class="text-center space-y-3">
           <span class="inline-block px-3 py-1 rounded-full bg-sage-100 text-sage-700 text-xs uppercase tracking-widest font-semibold">El lugar de nuestra celebración</span>
@@ -293,9 +278,9 @@
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M6 21V10l6-6 6 6v11M9 21v-6a3 3 0 0 1 6 0v6M12 4V1M9.5 2.5h5M9 11h.01M15 11h.01"/></svg>
             </div>
             <div class="flex-1 space-y-2">
-              <time class="block text-xs uppercase tracking-widest font-semibold text-royal-600" id="churchTimeDisplay" datetime="2027-03-20T13:00">1:00 P.M.</time>
+              <time class="block text-xs uppercase tracking-widest font-semibold text-royal-600" id="churchTimeDisplay" datetime="2027-02-20T13:00">1:00 P.M.</time>
               <h4 class="font-editorial text-2xl sm:text-3xl font-semibold text-royal-800" id="churchNameDisplay">Capilla de Nuestra Señora Guadalupe</h4>
-              <p class="text-sm text-royal-700/80 leading-relaxed">Ceremonia religiosa dentro del mismo recinto.</p>
+              <p class="text-sm text-royal-700/80 leading-relaxed">Ceremonia religiosa</p>
             </div>
           </div>
           <div class="flex items-start gap-4 lg:border-l border-royal-200/60 lg:pl-6">
@@ -303,16 +288,13 @@
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3l1 9a4 4 0 0 0 8 0l1-9M3 3h12M9 16v5M5 21h8M18 3v18M18 3c2 2 3 5 3 8h-3"/></svg>
             </div>
             <div class="flex-1 space-y-2">
-              <time class="block text-xs uppercase tracking-widest font-semibold text-royal-600" id="venueTimeDisplay" datetime="2027-03-20T15:00">3:00 P.M.</time>
-              <h4 class="font-editorial text-2xl sm:text-3xl font-semibold text-royal-800">Bienvenida y recepción</h4>
-              <p class="text-sm text-royal-700/80 leading-relaxed">Continuaremos celebrando juntos, sin cambiar de ubicación.</p>
+              <time class="block text-xs uppercase tracking-widest font-semibold text-royal-600" id="venueTimeDisplay" datetime="2027-02-20T15:00">3:00 P.M.</time>
+              <h4 class="font-editorial text-2xl sm:text-3xl font-semibold text-royal-800">Salón Bellagio</h4>
+              <p class="text-sm text-royal-700/80 leading-relaxed">Bienvenida y recepción</p>
             </div>
           </div>
         </div>
 
-        <div class="rounded-2xl bg-royal-50/70 border border-royal-200/50 p-4 text-center">
-          <p class="text-sm text-royal-700 leading-relaxed">La capilla está dentro del salón, así que no tendrás que trasladarte a otro lugar.</p>
-        </div>
         <div class="flex flex-wrap items-center justify-center gap-3">
           <a class="px-5 py-3 rounded-full bg-royal-600 hover:bg-royal-700 text-white text-xs uppercase tracking-wider font-medium transition inline-flex items-center gap-2 shadow-sm" href="https://maps.app.goo.gl/5PFnmmpCfRpmnmj1A" id="venueMapsLink" rel="noopener noreferrer" target="_blank">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5"/></svg>
@@ -325,12 +307,20 @@
   </div>
 </section>
 <!-- GALERÍA DE FOTOS INTERACTIVA (Con Filtros y Visor Lightbox) -->
-<section class="py-16 px-4 bg-cream-100 border-t border-royal-200/50" data-invitation="" id="galeria"><div class="max-w-6xl mx-auto"><div class="gallery-heading" data-reveal="soft" style=";--reveal-delay:0ms"><span class="eyebrow">Instantes que quiero guardar</span><h2 class="font-cursive text-5xl text-royal-600">Mis recuerdos</h2><p>Toca una fotografía para verla completa.</p></div><div class="photo-composition" id="galleryGrid"><img alt="Camila bailando el vals bajo luces" aria-label="Ampliar Camila bailando el vals bajo luces" class="lightbox-trigger" data-caption="La noche del vals — Camila" data-reveal="photo" decoding="async" role="button" src="assets/images/camila-vals.jpg" style=";--reveal-delay:0ms" tabindex="0"/><img data-same-as="portraitImg1" alt="Camila al atardecer" aria-label="Ampliar Camila al atardecer" class="lightbox-trigger" data-caption="Atardecer dorado — Sesión fotográfica de Camila" data-reveal="photo" decoding="async" role="button" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style=";--reveal-delay:50ms" tabindex="0"/><img data-same-as="portraitImg3" alt="Camila en jardines de la hacienda" aria-label="Ampliar Camila en jardines de la hacienda" class="lightbox-trigger" data-caption="Jardines de la Hacienda — Camila" data-reveal="photo" decoding="async" role="button" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style=";--reveal-delay:100ms" tabindex="0"/></div></div></section>
+<section class="py-16 px-4 bg-cream-100 border-t border-royal-200/50" data-invitation="" id="galeria"><div class="max-w-6xl mx-auto"><div class="gallery-heading layout-attr-1" data-reveal="soft"><span class="eyebrow">Instantes que quiero guardar</span><h2 class="font-cursive text-5xl text-royal-600">Mis recuerdos</h2><p>Toca una fotografía para verla completa.</p></div><div class="photo-composition" id="galleryGrid">
+<!-- Galería de 6 fotos. Las que dicen "pendientes" son espacios para las fotos nuevas: solo cambia su src. -->
+<img alt="Camila al atardecer en la hacienda" aria-label="Ampliar Camila al atardecer" class="lightbox-trigger g-a layout-attr-1" data-caption="Atardecer dorado — Sesión fotográfica de Camila" data-reveal="photo" decoding="async" role="button" src="assets/images/camila-galeria-01.webp" tabindex="0"/>
+<img alt="Camila con su ramo de hortensias blancas y delphinium azul" aria-label="Ampliar Camila con su ramo" class="lightbox-trigger g-b layout-attr-11" data-caption="Ramo de hortensias y delphinium — Camila" data-reveal="photo" decoding="async" loading="lazy" role="button" src="assets/images/camila-galeria-02.webp" tabindex="0"/>
+<img alt="Camila en la terraza colonial de cantera" aria-label="Ampliar Camila en la terraza colonial" class="lightbox-trigger g-c layout-attr-12" data-caption="Terraza de la Hacienda — Camila" data-reveal="photo" decoding="async" loading="lazy" role="button" src="assets/images/camila-galeria-03.webp" tabindex="0"/>
+<img alt="Camila bajo los arcos coloniales" aria-label="Ampliar Camila bajo los arcos coloniales" class="lightbox-trigger g-d layout-attr-11" data-caption="Arcos de la Hacienda — Camila" data-reveal="photo" decoding="async" loading="lazy" role="button" src="assets/images/camila-galeria-04.webp" tabindex="0"/>
+<img alt="Camila bailando el vals bajo luces" aria-label="Ampliar Camila bailando el vals bajo luces" class="lightbox-trigger g-e layout-attr-1" data-caption="La noche del vals — Camila" data-reveal="photo" decoding="async" role="button" src="assets/images/camila-galeria-05.webp" tabindex="0"/>
+<img alt="Camila girando su vestido en el patio iluminado" aria-label="Ampliar Camila girando su vestido" class="lightbox-trigger g-f layout-attr-12" data-caption="Ilusión y alegría — Mis XV Años Camila" data-reveal="photo" decoding="async" loading="lazy" role="button" src="assets/images/camila-galeria-06.webp" tabindex="0"/>
+</div></div></section>
 <!-- DRESS CODE, PALETA DE COLORES Y MESA DE REGALOS -->
 <section id="vestimenta" class="py-16 px-4 bg-cream-50 border-t border-royal-200/50" data-invitation="">
 <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
 <!-- Dress Code & Palette Card -->
-<div class="floral-card rounded-3xl p-8 text-center space-y-5" data-reveal="soft" id="dressCard" style=";--reveal-delay:0ms">
+<div class="floral-card rounded-3xl p-8 text-center space-y-5 layout-attr-1" data-reveal="soft" id="dressCard">
 <span class="text-xs uppercase tracking-[0.25em] text-sage-700 font-semibold">Código de Vestimenta</span>
 <h3 class="font-editorial text-3xl font-semibold text-royal-800">Etiqueta Formal</h3>
 <p class="text-xs sm:text-sm text-royal-600 leading-relaxed">Elige el color que más te guste. Lo único que te pedimos es vestir de <strong>etiqueta formal</strong>.</p>
@@ -363,12 +353,16 @@
 </div>
 </div>
 <!-- Lluvia de Sobres & Mesa de Regalos Card -->
-<div class="floral-card rounded-3xl p-8 text-center space-y-5 flex flex-col justify-between" data-reveal="soft" style=";--reveal-delay:80ms"><div class="space-y-3"><span class="eyebrow">Un detalle con cariño</span><h3 class="font-editorial text-3xl">Mesa de regalos</h3><p class="text-sm leading-relaxed">Tu compañía es mi mejor regalo. Si deseas obsequiarme algo especial, aquí encontrarás mi mesa de regalos.</p></div><svg aria-label="Caja de regalo con listón" class="place-illustration" role="img" viewbox="0 0 230 210"><circle cx="115" cy="108" fill="#e7edf3" r="88"></circle><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M65 100H165V175H65Z M55 85H175V110H55Z M109 85V175 M121 85V175 M115 85C60 85 67 35 92 52C109 64 115 85 115 85 M115 85C170 85 163 35 138 52C121 64 115 85 115 85 M45 180H185"></path></g></svg><p class="text-xs text-royal-600">Próximamente compartiremos el enlace de la mesa de regalos.</p></div>
+<div class="floral-card rounded-3xl p-8 text-center space-y-5 flex flex-col justify-between layout-attr-10" data-reveal="soft"><div class="space-y-3"><span class="eyebrow">Un detalle con cariño</span><h3 class="font-editorial text-3xl">Mesa de regalos</h3><p class="text-sm leading-relaxed">Tu compañía es mi mejor regalo. Si deseas obsequiarme algo especial, aquí encontrarás mi mesa de regalos.</p></div><svg aria-label="Caja de regalo con listón" class="place-illustration" role="img" viewbox="0 0 230 210"><circle cx="115" cy="108" fill="#e7edf3" r="88"></circle><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M65 100H165V175H65Z M55 85H175V110H55Z M109 85V175 M121 85V175 M115 85C60 85 67 35 92 52C109 64 115 85 115 85 M115 85C170 85 163 35 138 52C121 64 115 85 115 85 M45 180H185"></path></g></svg><p class="text-xs text-royal-600">Próximamente compartiremos el enlace de la mesa de regalos.</p></div>
 </div>
 </section>
+<!-- FOTOS ENTRE SECCIONES (3): foto vertical final a todo el ancho -->
+<section class="photo-vertical-full" data-invitation="" id="fotos-3" aria-label="Foto de Camila">
+  <img class="lightbox-trigger layout-attr-1" src="assets/images/camila-foto-vertical.webp" alt="Camila frente al portón colonial con flores" data-caption="Camila — Portón floral de la Hacienda" data-reveal="photo" loading="lazy" decoding="async"/>
+</section>
 <!-- ASIGNACIÓN DE BOLETOS POR INVITADO + CONFIRMACIÓN DE ASISTENCIA (RSVP) -->
-<section class="ticket-summary" data-invitation="" id="boletos-rsvp"><span class="eyebrow" data-reveal="soft" style=";--reveal-delay:0ms">Un lugar para ti</span><h2 class="font-cursive" data-reveal="soft" style=";--reveal-delay:0ms">Te esperamos</h2><p data-reveal="soft" id="summaryGuest" style=";--reveal-delay:0ms"></p><strong data-reveal="soft" id="summaryCount" style=";--reveal-delay:0ms">4</strong><p data-reveal="soft" style=";--reveal-delay:0ms">boletos asignados</p><!-- DESHABILITADO POR AHORA: para reactivarlo cambia este <span> por <a class="confirm-button" href="#confirmar-asistencia"> y quita aria-disabled y el style -->
-<span aria-disabled="true" class="confirm-button" data-reveal="soft" style=";--reveal-delay:0ms;opacity:.5;cursor:not-allowed">Confirmar asistencia <span aria-hidden="true">↗</span></span></section><section class="py-16 px-4 bg-gradient-to-b from-cream-200/70 to-cream-100 border-t border-royal-200 separate-view" hidden="" id="confirmar-asistencia"><div class="view-back"><a href="#boletos-rsvp">← Volver a la invitación</a></div>
+<section class="ticket-summary" data-invitation="" id="boletos-rsvp"><span class="eyebrow layout-attr-1" data-reveal="soft">Un lugar para ti</span><h2 class="font-cursive layout-attr-1" data-reveal="soft">Te esperamos</h2><p data-reveal="soft" id="summaryGuest" class="layout-attr-1"></p><strong data-reveal="soft" id="summaryCount" class="layout-attr-1">4</strong><p data-reveal="soft" class="layout-attr-1">boletos asignados</p><!-- DESHABILITADO POR AHORA: para reactivarlo cambia este <span> por <a class="confirm-button" href="#confirmar-asistencia"> y quita aria-disabled y el style -->
+<span aria-disabled="true" class="confirm-button layout-attr-13" data-reveal="soft">Confirmar asistencia <span aria-hidden="true">↗</span></span></section><section class="py-16 px-4 bg-gradient-to-b from-cream-200/70 to-cream-100 border-t border-royal-200 separate-view" hidden="" id="confirmar-asistencia"><div class="view-back"><a href="#boletos-rsvp">← Volver a la invitación</a></div>
 <div class="max-w-5xl mx-auto space-y-10">
 <div class="text-center max-w-2xl mx-auto space-y-2">
 <span class="text-xs uppercase tracking-[0.25em] text-sage-700 font-semibold">Pases Personalizados y Confirmación</span>
@@ -436,7 +430,7 @@
 <!-- Attendance Radio -->
 <div class="space-y-2">
 <label class="block text-xs uppercase tracking-wider font-semibold text-royal-700">
-                2. ¿Podrán acompañarnos el 20 de Marzo de 2027?
+                2. ¿Podrán acompañarnos el 20 de Febrero de 2027?
               </label>
 <div class="grid grid-cols-2 gap-3">
 <label class="cursor-pointer">
@@ -490,10 +484,10 @@
 </div>
 <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
 <p class="text-xs text-royal-600">
-              Favor de confirmar antes del <strong>20 de Febrero de 2027</strong>.
+              Favor de confirmar antes del <strong>20 de Enero de 2027</strong>.
             </p>
 <!-- DESHABILITADO POR AHORA: para reactivarlo quita "disabled" y "aria-disabled", y borra el style y regresa las clases hover:bg-royal-700 transition shadow-lg -->
-<button aria-disabled="true" class="px-8 py-3.5 rounded-full bg-royal-600 text-white text-xs sm:text-sm uppercase tracking-widest font-semibold" disabled="" style="opacity:.5;cursor:not-allowed" type="submit">
+<button aria-disabled="true" class="px-8 py-3.5 rounded-full bg-royal-600 text-white text-xs sm:text-sm uppercase tracking-widest font-semibold layout-attr-14" disabled="" type="submit">
               Confirmar Asistencia Ahora
             </button>
 </div>
@@ -559,26 +553,20 @@
 </div>
 </div></section>
 <!-- FOOTER -->
-<footer class="py-12 px-4 bg-royal-900 text-cream-100 text-center space-y-4" data-invitation="" data-reveal="soft" style=";--reveal-delay:0ms">
+<footer class="py-12 px-4 bg-royal-900 text-cream-100 text-center space-y-4 layout-attr-1" data-invitation="" data-reveal="soft">
 <p class="font-cursive text-4xl text-royal-200">Camila</p>
-<p class="text-xs uppercase tracking-[0.25em] text-royal-300">Mis XV Años • 20 de Marzo de 2027</p>
+<p class="text-xs uppercase tracking-[0.25em] text-royal-300">Mis XV Años • 20 de Febrero de 2027</p>
 <p class="text-xs text-royal-400 max-w-md mx-auto">
       Te esperamos con muchísima ilusión para celebrar juntos este momento tan especial.
     </p>
 </footer>
-<!-- LIGHTBOX MODAL FOR GALLERY -->
-<div class="fixed inset-0 z-50 hidden bg-royal-900/90 backdrop-blur-sm flex items-center justify-center p-4" id="lightboxModal">
-<div class="relative max-w-4xl w-full bg-cream-50 rounded-3xl overflow-hidden shadow-2xl border border-royal-300">
-<div class="flex items-center justify-between px-5 py-3 bg-white border-b border-royal-200">
-<span class="font-editorial text-lg font-semibold text-royal-800" id="lightboxCaption">Vista previa de fotografía</span>
-<button aria-label="Cerrar visor" class="p-1.5 rounded-full hover:bg-royal-100 text-royal-700" id="btnCloseLightbox" type="button">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-</button>
-</div>
-<div class="p-4 bg-cream-100 flex items-center justify-center max-h-[75vh]">
-<img alt="Vista ampliada" class="max-h-[68vh] w-auto max-w-full object-contain rounded-xl shadow" id="lightboxImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
-</div>
-</div>
+<!-- VISOR DE FOTOGRAFÍAS: solo la imagen, sin tarjeta ni encabezado -->
+<div aria-label="Fotografía ampliada" aria-modal="true" class="fixed inset-0 z-50 hidden bg-royal-900/90 backdrop-blur-sm flex items-center justify-center p-4" id="lightboxModal" role="dialog" tabindex="-1">
+  <button aria-label="Cerrar fotografía" class="absolute right-4 z-20 w-10 h-10 rounded-full bg-royal-900/75 text-white flex items-center justify-center" id="btnCloseLightbox" style="top:max(1rem, env(safe-area-inset-top));" type="button">
+    <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+  </button>
+  <img alt="Fotografía ampliada de Camila" class="max-h-[90vh] w-auto max-w-full object-contain" decoding="async" id="lightboxImg" src="assets/images/pixel-transparente.gif" style="max-height:calc(100dvh - 2rem); border-radius:0; box-shadow:none;"/>
+  <span class="sr-only" id="lightboxCaption">Fotografía de Camila</span>
 </div>
 <!-- GIFT / LLUVIA DE SOBRES MODAL -->
 <!-- ADMIN / CUSTOMIZE EVENT & ADD GUEST MODAL -->
@@ -603,7 +591,7 @@
 </div>
 <div>
 <label class="block font-medium text-royal-700 mb-1">Fecha y Hora de la Misa</label>
-<input class="w-full px-3 py-2 rounded-xl border border-royal-300 bg-white" id="inputEventDate" type="datetime-local" value="2027-03-20T13:00"/>
+<input class="w-full px-3 py-2 rounded-xl border border-royal-300 bg-white" id="inputEventDate" type="datetime-local" value="2027-02-20T13:00"/>
 </div>
 <div>
 <label class="block font-medium text-royal-700 mb-1">Nombre del Papá</label>
@@ -670,871 +658,7 @@
 <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
 <span id="toastMessage">Acción completada</span>
 </div>
-<script>
-    (function() {
-      // Initial Guest & Ticket Database
-      const defaultGuests = [
-        {
-          code: 'FAM-GARCIA',
-          name: 'Familia García López',
-          assignedTickets: 4,
-          table: 'Mesa 1',
-          status: 'pending',
-          confirmedTickets: 0,
-          attendees: ['Sr. Carlos García', 'Sra. Elena López', 'Diego García', 'Valeria García'],
-          phone: '',
-          song: '',
-          message: ''
-        },
-        {
-          code: 'FAM-MARTINEZ',
-          name: 'Tíos Martínez Soto',
-          assignedTickets: 3,
-          table: 'Mesa 2',
-          status: 'pending',
-          confirmedTickets: 0,
-          attendees: ['Tío Jorge Martínez', 'Tía Laura Soto', 'Mateo Martínez'],
-          phone: '',
-          song: '',
-          message: ''
-        },
-        {
-          code: 'INV-SOFIA',
-          name: 'Sofía Hernández y Acompañante',
-          assignedTickets: 2,
-          table: 'Mesa Jóvenes 1',
-          status: 'pending',
-          confirmedTickets: 0,
-          attendees: ['Sofía Hernández', 'Acompañante'],
-          phone: '',
-          song: '',
-          message: ''
-        },
-        {
-          code: 'FAM-RAMIREZ',
-          name: 'Familia Ramírez Castillo (Padrinos)',
-          assignedTickets: 5,
-          table: 'Mesa de Honor',
-          status: 'attending',
-          confirmedTickets: 5,
-          attendees: ['Roberto Ramírez', 'Lucía Castillo', 'Sebastián Ramírez', 'Emilia Ramírez', 'Abuelita Carmen'],
-          phone: '222 456 7890',
-          song: 'Tiempo de Vals - Chayanne',
-          message: '¡Con todo nuestro cariño para nuestra ahijada Camila!'
-        },
-        {
-          code: 'INV-CARLOS',
-          name: 'Carlos Eduardo Mendoza (Pase Individual)',
-          assignedTickets: 1,
-          table: 'Mesa Jóvenes 2',
-          status: 'pending',
-          confirmedTickets: 0,
-          attendees: ['Carlos Eduardo Mendoza'],
-          phone: '',
-          song: '',
-          message: ''
-        }
-      ];
-
-      let guests = [];
-      let currentGuestCode = 'FAM-GARCIA';
-      let targetEventDate = new Date('2027-03-20T13:00:00-06:00');
-
-      function loadState() {
-        try {
-          const saved = localStorage.getItem('xv_camila_guests_v1');
-          if (saved) {
-            guests = JSON.parse(saved);
-          } else {
-            guests = JSON.parse(JSON.stringify(defaultGuests));
-          }
-        } catch (e) {
-          guests = JSON.parse(JSON.stringify(defaultGuests));
-        }
-      }
-
-      function saveState() {
-        try {
-          localStorage.setItem('xv_camila_guests_v1', JSON.stringify(guests));
-        } catch (e) {
-          // Ignore storage error in restricted iframe
-        }
-      }
-
-      function showToast(msg) {
-        const toast = document.getElementById('toastNotification');
-        const label = document.getElementById('toastMessage');
-        if (!toast || !label) return;
-        label.textContent = msg;
-        toast.classList.remove('hidden');
-        if (window._toastTimer) clearTimeout(window._toastTimer);
-        window._toastTimer = setTimeout(function() {
-          toast.classList.add('hidden');
-        }, 3800);
-      }
-
-      function copyText(text, successMsg) {
-        try {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(function() {
-              showToast(successMsg);
-            }).catch(function() {
-              fallbackCopy(text, successMsg);
-            });
-          } else {
-            fallbackCopy(text, successMsg);
-          }
-        } catch (e) {
-          fallbackCopy(text, successMsg);
-        }
-      }
-
-      function fallbackCopy(text, successMsg) {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        try {
-          document.execCommand('copy');
-          showToast(successMsg);
-        } catch (e) {
-          showToast('Copiado: ' + text);
-        }
-        document.body.removeChild(ta);
-      }
-
-      // Countdown Timer to March 20, 2027
-      function updateCountdown() {
-        const now = new Date();
-        const diff = targetEventDate.getTime() - now.getTime();
-        const elDays = document.getElementById('cdDays');
-        const elHours = document.getElementById('cdHours');
-        const elMinutes = document.getElementById('cdMinutes');
-        const elSeconds = document.getElementById('cdSeconds');
-        if (!elDays) return;
-
-        if (diff <= 0) {
-          elDays.textContent = '00';
-          elHours.textContent = '00';
-          elMinutes.textContent = '00';
-          elSeconds.textContent = '00';
-          return;
-        }
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const mins = Math.floor((diff / 1000 / 60) % 60);
-        const secs = Math.floor((diff / 1000) % 60);
-
-        elDays.textContent = String(days).padStart(2, '0');
-        elHours.textContent = String(hours).padStart(2, '0');
-        elMinutes.textContent = String(mins).padStart(2, '0');
-        elSeconds.textContent = String(secs).padStart(2, '0');
-      }
-
-      // Render Guest Dropdown, Ticket Stub, RSVP Form, and Admin Table
-      function renderAllGuestViews() {
-        const guest = guests.find(function(g) { return g.code === currentGuestCode; }) || guests[0];
-        if (!guest) return;
-        currentGuestCode = guest.code;
-
-        document.getElementById('summaryGuest').textContent = guest.name;
- document.getElementById('summaryCount').textContent = guest.assignedTickets;
- try { localStorage.setItem('xv_camila_current', currentGuestCode); } catch(e) {}
- // 1. Top Banner
-        document.getElementById('bannerGuestName').textContent = guest.name;
-        document.getElementById('bannerTicketBadge').textContent = guest.assignedTickets + (guest.assignedTickets === 1 ? ' boleto asignado' : ' boletos asignados');
-
-        // 2. Dropdown Selector
-        const select = document.getElementById('guestSelectDropdown');
-        select.innerHTML = '';
-        guests.forEach(function(g) {
-          const opt = document.createElement('option');
-          opt.value = g.code;
-          opt.textContent = g.name + ' (' + g.assignedTickets + (g.assignedTickets === 1 ? ' boleto' : ' boletos') + ')';
-          if (g.code === guest.code) opt.selected = true;
-          select.appendChild(opt);
-        });
-
-        // 3. Ticket Stub Details
-        document.getElementById('ticketCodeBadge').textContent = 'Código: ' + guest.code;
-        document.getElementById('ticketTableBadge').textContent = guest.table || 'Mesa Asignada';
-        document.getElementById('ticketGuestTitle').textContent = guest.name;
-        document.getElementById('ticketAssignedText').innerHTML =
-          'Hemos reservado <strong class="text-royal-900 underline">' +
-          guest.assignedTickets +
-          (guest.assignedTickets === 1 ? ' boleto' : ' boletos') +
-          '</strong> especialmente para ti / tu familia.';
-        document.getElementById('ticketCountBig').textContent = String(guest.assignedTickets);
-        document.getElementById('ticketCountLabel').textContent = guest.assignedTickets === 1 ? 'Boleto' : 'Boletos';
-
-        const statusBadge = document.getElementById('ticketStatusBadge');
-        if (guest.status === 'attending') {
-          statusBadge.textContent = ' Confirmado (' + guest.confirmedTickets + ' de ' + guest.assignedTickets + ' boletos)';
-          statusBadge.className = 'text-xs font-semibold text-emerald-800 bg-emerald-100 border border-emerald-300 rounded-full px-3 py-1 inline-block';
-        } else if (guest.status === 'declined') {
-          statusBadge.textContent = 'No podrá asistir';
-          statusBadge.className = 'text-xs font-semibold text-rose-800 bg-rose-100 border border-rose-300 rounded-full px-3 py-1 inline-block';
-        } else {
-          statusBadge.textContent = 'Pendiente de confirmar';
-          statusBadge.className = 'text-xs font-medium text-amber-800 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 inline-block';
-        }
-
-        // Visual Ticket Stubs
-        const stubsContainer = document.getElementById('visualTicketsContainer');
-        stubsContainer.innerHTML = '';
-        for (let i = 1; i <= guest.assignedTickets; i++) {
-          const stub = document.createElement('span');
-          stub.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-royal-200 text-xs text-royal-800 shadow-sm';
-          const personName = (guest.attendees && guest.attendees[i - 1]) ? guest.attendees[i - 1] : ('Boleto #' + i);
-          stub.innerHTML = ' <strong>Boleto ' + i + ':</strong> <span>' + personName + '</span>';
-          stubsContainer.appendChild(stub);
-        }
-
-        // 4. RSVP Seat Selector (Strictly 1 .. guest.assignedTickets)
-        document.getElementById('labelMaxTickets').textContent = String(guest.assignedTickets);
-        const seatsSelect = document.getElementById('rsvpSeatsSelect');
-        seatsSelect.innerHTML = '';
-        const selectedSeats = guest.confirmedTickets > 0 ? guest.confirmedTickets : guest.assignedTickets;
-        for (let i = 1; i <= guest.assignedTickets; i++) {
-          const opt = document.createElement('option');
-          opt.value = String(i);
-          opt.textContent = i + (i === 1 ? ' boleto (1 persona)' : ' boletos (' + i + ' personas)');
-          if (i === selectedSeats) opt.selected = true;
-          seatsSelect.appendChild(opt);
-        }
-
-        // Set Radio status
-        const radios = document.querySelectorAll('input[name="rsvpStatus"]');
-        radios.forEach(function(r) {
-          r.checked = (guest.status === 'declined' ? r.value === 'declined' : r.value === 'attending');
-        });
-
-        document.getElementById('rsvpPhone').value = guest.phone || '';
-        document.getElementById('rsvpSong').value = guest.song || '';
-        document.getElementById('rsvpMessage').value = guest.message || '';
-
-        renderAttendeeInputs(guest, selectedSeats);
-        toggleRsvpAttendanceFields();
-        renderAdminTable();
-      }
-
-      function renderAttendeeInputs(guest, count) {
-        const grid = document.getElementById('attendeeInputsGrid');
-        grid.innerHTML = '';
-        for (let i = 0; i < count; i++) {
-          const wrapper = document.createElement('div');
-          const defaultVal = (guest.attendees && guest.attendees[i]) ? guest.attendees[i] : '';
-          wrapper.innerHTML =
-            '<label class="block text-[11px] font-medium text-royal-600 mb-1"> Boleto ' + (i + 1) + ' de ' + guest.assignedTickets + '</label>' +
-            '<input type="text" data-attendee-index="' + i + '" value="' + defaultVal.replace(/"/g, '&quot;') + '" placeholder="Nombre completo del asistente ' + (i + 1) + '" required class="attendee-name-input w-full px-3.5 py-2 rounded-xl border border-royal-300 bg-white text-xs sm:text-sm text-royal-900 focus:outline-none focus:ring-2 focus:ring-royal-500" />';
-          grid.appendChild(wrapper);
-        }
-      }
-
-      function toggleRsvpAttendanceFields() {
-        const checkedRadio = document.querySelector('input[name="rsvpStatus"]:checked');
-        const isAttending = !checkedRadio || checkedRadio.value === 'attending';
-        const seatWrapper = document.getElementById('rsvpSeatCountWrapper');
-        const namesWrapper = document.getElementById('attendeeNamesContainer');
- namesWrapper.querySelectorAll('input').forEach(input => { input.disabled = !isAttending; });
-        if (isAttending) {
-          seatWrapper.classList.remove('opacity-40', 'pointer-events-none');
-          namesWrapper.classList.remove('hidden');
-        } else {
-          seatWrapper.classList.add('opacity-40', 'pointer-events-none');
-          namesWrapper.classList.add('hidden');
-        }
-      }
-
-      function renderAdminTable() {
-        const tbody = document.getElementById('guestAdminTableBody');
-        tbody.innerHTML = '';
-
-        let totalTickets = 0;
-        let confirmedTickets = 0;
-        let pendingTickets = 0;
-
-        guests.forEach(function(g) {
-          totalTickets += g.assignedTickets;
-          if (g.status === 'attending') {
-            confirmedTickets += g.confirmedTickets;
-          } else if (g.status === 'pending') {
-            pendingTickets += g.assignedTickets;
-          }
-
-          const tr = document.createElement('tr');
-          tr.className = (g.code === currentGuestCode) ? 'bg-royal-50/70' : 'hover:bg-cream-50';
-
-          let statusHtml = '<span class="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[11px]">Pendiente</span>';
-          if (g.status === 'attending') {
-            statusHtml = '<span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] font-semibold">Confirmado (' + g.confirmedTickets + '/' + g.assignedTickets + ')</span>';
-          } else if (g.status === 'declined') {
-            statusHtml = '<span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300 text-[11px]">No asiste</span>';
-          }
-
-          tr.innerHTML =
-            '<td class="py-3 px-4 font-mono text-xs text-royal-600">' + g.code + '</td>' +
-            '<td class="py-3 px-4 font-medium text-royal-900">' + g.name + '</td>' +
-            '<td class="py-3 px-4 text-center">' +
-              '<div class="inline-flex items-center gap-1.5 bg-white border border-royal-200 rounded-lg px-2 py-0.5">' +
-                '<button type="button" data-action="dec-ticket" data-code="' + g.code + '" class="text-royal-600 hover:text-royal-900 font-bold px-1" title="Reducir boletos">−</button>' +
-                '<span class="font-semibold text-royal-800 min-w-[1.5rem] text-center">' + g.assignedTickets + '</span>' +
-                '<button type="button" data-action="inc-ticket" data-code="' + g.code + '" class="text-royal-600 hover:text-royal-900 font-bold px-1" title="Aumentar boletos">+</button>' +
-              '</div>' +
-            '</td>' +
-            '<td class="py-3 px-4 text-center text-royal-600">' + (g.table || '-') + '</td>' +
-            '<td class="py-3 px-4 text-center">' + statusHtml + '</td>' +
-            '<td class="py-3 px-4 text-right space-x-1">' +
-              '<button type="button" data-action="select-guest" data-code="' + g.code + '" class="px-2.5 py-1 rounded-lg bg-royal-600 hover:bg-royal-700 text-white text-[11px] font-medium transition">Ver pase</button>' +
-            '</td>';
-          tbody.appendChild(tr);
-        });
-
-        document.getElementById('statTotalPasses').textContent = String(guests.length);
-        document.getElementById('statTotalTickets').textContent = String(totalTickets);
-        document.getElementById('statConfirmedTickets').textContent = String(confirmedTickets);
-        document.getElementById('statPendingTickets').textContent = String(pendingTickets);
-      }
-
-      // Web Audio API Romantic Waltz Synthesizer (No external audio file needed)
-      let audioCtx = null;
-      let isPlayingMusic = false;
-      let musicInterval = null;
-      let noteStep = 0;
-
-      // Gentle 3/4 Waltz melody in F Major / D Minor romantic style
-      const waltzNotes = [
-        { freq: 349.23, dur: 0.45 }, // F4
-        { freq: 440.00, dur: 0.40 }, // A4
-        { freq: 523.25, dur: 0.40 }, // C5
-        { freq: 587.33, dur: 0.85 }, // D5
-        { freq: 523.25, dur: 0.40 }, // C5
-        { freq: 440.00, dur: 0.45 }, // A4
-        { freq: 392.00, dur: 0.40 }, // G4
-        { freq: 466.16, dur: 0.40 }, // Bb4
-        { freq: 523.25, dur: 0.85 }, // C5
-        { freq: 440.00, dur: 0.40 }, // A4
-        { freq: 349.23, dur: 0.80 }, // F4
-        { freq: 293.66, dur: 0.45 }  // D4
-      ];
-
-      function playWaltzNote() {
-        if (!isPlayingMusic || !audioCtx) return;
-        const note = waltzNotes[noteStep % waltzNotes.length];
-        noteStep++;
-
-        const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(note.freq, now);
-
-        gain.gain.setValueAtTime(0.001, now);
-        gain.gain.exponentialRampToValueAtTime(0.08, now + 0.06);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + note.dur);
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + note.dur + 0.05);
-      }
-
-      // CANCIONAQUI: si usas el mp3, aquí cambia el sintetizador por document.getElementById('bgMusic').play() / .pause()
-      function toggleMusic() {
-        const waves = document.getElementById('musicWaves');
-        const label = document.getElementById('musicLabel');
-        if (!isPlayingMusic) {
-          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-          if (!AudioContextClass) {
-            showToast('Tu navegador no soporta audio sintetizado.');
-            return;
-          }
-          if (!audioCtx) audioCtx = new AudioContextClass();
-          if (audioCtx.state === 'suspended') audioCtx.resume();
-          isPlayingMusic = true;
-          waves.classList.add('playing');
-          label.textContent = 'Pausar vals';
-          playWaltzNote();
-          if (musicInterval) clearInterval(musicInterval);
-          musicInterval = setInterval(playWaltzNote, 520);
-          showToast('Reproduciendo melodía de vals para los XV de Camila');
-        } else {
-          isPlayingMusic = false;
-          waves.classList.remove('playing');
-          label.textContent = 'Escucha mi vals';
-          if (musicInterval) {
-            clearInterval(musicInterval);
-            musicInterval = null;
-          }
-          showToast('Música en pausa');
-        }
-      }
-
-      // Initialize Event Listeners
-      window.addEventListener('DOMContentLoaded', function() {
-        loadState();
- try { currentGuestCode = new URLSearchParams(location.search).get('invitado') || localStorage.getItem('xv_camila_current') || currentGuestCode; } catch(e) {}
-        renderAllGuestViews();
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-
-        // Mobile menu toggle
-        document.getElementById('btnMobileMenu')?.addEventListener('click', function() {
-          document.getElementById('mobileMenuPanel').classList.toggle('hidden');
-        });
-        document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
-          link.addEventListener('click', function() {
-            document.getElementById('mobileMenuPanel').classList.add('hidden');
-          });
-        });
-
-        // Music toggles
-        document.getElementById('btnMusicToggle')?.addEventListener('click', toggleMusic);
-        document.getElementById('btnHeroMusic')?.addEventListener('click', toggleMusic);
-
-        // Save Calendar (.ics download)
-        document.getElementById('btnSaveCalendar')?.addEventListener('click', function() {
-          const quinceName = document.getElementById('heroQuinceName').textContent || 'Camila';
-          const church = document.getElementById('churchNameDisplay').textContent;
-          const venue = document.getElementById('venueNameDisplay').textContent;
-          const icsContent = [
-            'BEGIN:VCALENDAR',
-            'VERSION:2.0',
-            'BEGIN:VEVENT',
-            'DTSTART:20270320T190000Z',
-            'DTEND:20270321T050000Z',
-            'SUMMARY:Mis XV Años - ' + quinceName,
-            'DESCRIPTION:Ceremonia en ' + church + ' y recepción en el mismo recinto: ' + venue,
-            'LOCATION:' + venue + ', ' + document.getElementById('venueAddressDisplay').textContent.trim(),
-            'END:VEVENT',
-            'END:VCALENDAR'
-          ].join('\r\n');
-          const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'XV_Anos_' + quinceName + '_20_Marzo_2027.ics';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          showToast(' Evento descargado para tu calendario (20 de Marzo de 2027)');
-        });
-
-        // Hero Photo Upload
-        document.getElementById('inputHeroPhotoUpload')?.addEventListener('change', function(e) {
-          const file = e.target.files && e.target.files[0];
-          if (!file) return;
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            document.getElementById('heroMainImg').src = ev.target.result;
-            showToast(' Foto principal de la quinceañera actualizada');
-          };
-          reader.readAsDataURL(file);
-        });
-
-        // Gallery Upload
-        document.getElementById('inputGalleryUpload')?.addEventListener('change', function(e) {
-          const file = e.target.files && e.target.files[0];
-          if (!file) return;
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            const grid = document.getElementById('galleryGrid');
-            const card = document.createElement('div');
-            card.className = 'gallery-item floral-card rounded-2xl overflow-hidden group';
-            card.setAttribute('data-category', 'quince');
-            card.innerHTML =
-              '<div class="aspect-[4/3] overflow-hidden bg-cream-200">' +
-                '<img src="' + ev.target.result + '" alt="Foto subida" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer lightbox-trigger" data-caption="Fotografía agregada a la galería de XV años" />' +
-              '</div>' +
-              '<div class="p-3.5 flex items-center justify-between text-xs text-royal-700">' +
-                '<span class="font-medium">Recuerdo Especial</span>' +
-                '<span class="text-royal-400">Sesión XV</span>' +
-              '</div>';
-            grid.prepend(card);
-            showToast(' Nueva fotografía añadida a la galería');
-          };
-          reader.readAsDataURL(file);
-        });
-
-        // Gallery Category Filters
-        document.querySelectorAll('.gallery-filter-btn').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            const filter = btn.getAttribute('data-filter');
-            document.querySelectorAll('.gallery-filter-btn').forEach(function(b) {
-              b.className = 'gallery-filter-btn px-3.5 py-1.5 rounded-full text-xs font-medium bg-white text-royal-700 border border-royal-200 hover:bg-royal-50 transition';
-            });
-            btn.className = 'gallery-filter-btn px-3.5 py-1.5 rounded-full text-xs font-medium bg-royal-600 text-white transition';
-
-            document.querySelectorAll('#galleryGrid .gallery-item').forEach(function(item) {
-              if (filter === 'all' || item.getAttribute('data-category') === filter) {
-                item.classList.remove('hidden');
-              } else {
-                item.classList.add('hidden');
-              }
-            });
-          });
-        });
-
-        // Lightbox Delegation
-        document.body.addEventListener('click', function(e) {
-          const trigger = e.target.closest('.lightbox-trigger');
-          if (trigger) {
-            const src = trigger.getAttribute('src');
-            const caption = trigger.getAttribute('data-caption') || trigger.getAttribute('alt') || 'Fotografía';
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightboxCaption').textContent = caption;
-            document.getElementById('lightboxModal').classList.remove('hidden');
-          }
-        });
-        document.getElementById('btnCloseLightbox')?.addEventListener('click', function() {
-          document.getElementById('lightboxModal').classList.add('hidden');
-        });
-        document.getElementById('lightboxModal')?.addEventListener('click', function(e) {
-          if (e.target.id === 'lightboxModal') {
-            document.getElementById('lightboxModal').classList.add('hidden');
-          }
-        });
-
-        // Copy Church & Venue Addresses
-        document.getElementById('btnCopyVenueAddress')?.addEventListener('click', function() {
-          const addr = document.getElementById('venueAddressDisplay').textContent.trim();
-          copyText(addr, ' Dirección copiada al portapapeles');
-        });
-
-        // Gift Modal
-        document.getElementById('btnOpenGiftModal')?.addEventListener('click', function() {
-          document.getElementById('giftModal').classList.remove('hidden');
-        });
-        document.getElementById('btnCloseGiftModal')?.addEventListener('click', function() {
-          document.getElementById('giftModal').classList.add('hidden');
-        });
-        document.getElementById('btnCopyClabe')?.addEventListener('click', function() {
-          const clabe = document.getElementById('clabeNumber').textContent.trim();
-          copyText(clabe, ' Cuenta CLABE copiada al portapapeles');
-        });
-
-        // Admin / Customizer Modal
-        function openAdminModal() {
-          document.getElementById('adminModal').classList.remove('hidden');
-        }
-        document.getElementById('btnOpenAdminModal')?.addEventListener('click', openAdminModal);
-        document.getElementById('btnEditLocations')?.addEventListener('click', openAdminModal);
-        document.getElementById('btnAddGuestRow')?.addEventListener('click', openAdminModal);
-        document.getElementById('btnCloseAdminModal')?.addEventListener('click', function() {
-          document.getElementById('adminModal').classList.add('hidden');
-        });
-
-        // Guest Select Dropdown
-        document.getElementById('guestSelectDropdown')?.addEventListener('change', function(e) {
-          currentGuestCode = e.target.value;
-          renderAllGuestViews();
-          showToast(' Mostrando pase y boletos de: ' + e.target.options[e.target.selectedIndex].text);
-        });
-
-        // Guest Search Input
-        document.getElementById('btnSearchGuest')?.addEventListener('click', function() {
-          const q = document.getElementById('guestSearchInput').value.trim().toLowerCase();
-          if (!q) {
-            showToast('Escribe tu nombre, apellido o código para buscar tu pase.');
-            return;
-          }
-          const found = guests.find(function(g) {
-            return g.name.toLowerCase().includes(q) || g.code.toLowerCase().includes(q);
-          });
-          if (found) {
-            currentGuestCode = found.code;
-            renderAllGuestViews();
-            showToast(' Pase encontrado: ' + found.name + ' (' + found.assignedTickets + ' boletos)');
-          } else {
-            showToast('No encontramos ese nombre exacto. Puedes seleccionarlo en la lista o agregarlo en Personalizar.');
-          }
-        });
-
-        // RSVP Attendance Radio Change
-        document.querySelectorAll('input[name="rsvpStatus"]').forEach(function(radio) {
-          radio.addEventListener('change', toggleRsvpAttendanceFields);
-        });
-
-        // RSVP Number of Tickets Change
-        document.getElementById('rsvpSeatsSelect')?.addEventListener('change', function(e) {
-          const guest = guests.find(function(g) { return g.code === currentGuestCode; }) || guests[0];
-          const count = parseInt(e.target.value, 10) || 1;
-          renderAttendeeInputs(guest, count);
-        });
-
-        // RSVP Form Submit
-        document.getElementById('rsvpForm')?.addEventListener('submit', function(e) {
-          e.preventDefault();
-          const guest = guests.find(function(g) { return g.code === currentGuestCode; });
-          if (!guest) return;
-
-          const checkedRadio = document.querySelector('input[name="rsvpStatus"]:checked');
-          const status = checkedRadio ? checkedRadio.value : 'attending';
-          guest.status = status;
-
-          if (status === 'attending') {
-            const seats = parseInt(document.getElementById('rsvpSeatsSelect').value, 10) || guest.assignedTickets;
-            guest.confirmedTickets = Math.min(seats, guest.assignedTickets);
-            const nameInputs = document.querySelectorAll('.attendee-name-input');
-            const names = [];
-            nameInputs.forEach(function(inp) {
-              if (inp.value.trim()) names.push(inp.value.trim());
-            });
-            if (names.length > 0) guest.attendees = names;
-          } else {
-            guest.confirmedTickets = 0;
-          }
-
-          guest.phone = document.getElementById('rsvpPhone').value.trim();
-          guest.song = document.getElementById('rsvpSong').value.trim();
-          guest.message = document.getElementById('rsvpMessage').value.trim();
-
-          saveState();
-          renderAllGuestViews();
-
-          if (status === 'attending') {
-            showToast('Respuesta guardada en este navegador para ' + guest.name + ' (' + guest.confirmedTickets + ' boletos)!');
-          } else {
-            showToast('Respuesta guardada en este navegador. ¡Gracias por avisarnos!');
-          }
-        });
-
-        // Admin Table Actions (Increment/Decrement Tickets or Switch Guest View)
-        document.getElementById('guestAdminTableBody')?.addEventListener('click', function(e) {
-          const btn = e.target.closest('button[data-action]');
-          if (!btn) return;
-          const action = btn.getAttribute('data-action');
-          const code = btn.getAttribute('data-code');
-          const guest = guests.find(function(g) { return g.code === code; });
-          if (!guest) return;
-
-          if (action === 'inc-ticket') {
-            guest.assignedTickets = Math.min(15, guest.assignedTickets + 1);
-            saveState();
-            renderAllGuestViews();
-            showToast('Boletos de ' + guest.name + ' actualizados a ' + guest.assignedTickets);
-          } else if (action === 'dec-ticket') {
-            guest.assignedTickets = Math.max(1, guest.assignedTickets - 1);
-            if (guest.confirmedTickets > guest.assignedTickets) {
-              guest.confirmedTickets = guest.assignedTickets;
-            }
-            saveState();
-            renderAllGuestViews();
-            showToast('Boletos de ' + guest.name + ' actualizados a ' + guest.assignedTickets);
-          } else if (action === 'select-guest') {
-            currentGuestCode = guest.code;
-            renderAllGuestViews();
-            location.hash = 'boletos-rsvp';
-            showToast('Mostrando invitación personalizada para ' + guest.name);
-          }
-        });
-
-        // Customize Event Form Submit
-        document.getElementById('customEventForm')?.addEventListener('submit', function(e) {
-          e.preventDefault();
-          const qName = document.getElementById('inputQuinceName').value.trim() || 'Camila';
-          const father = document.getElementById('inputFatherName').value.trim();
-          const mother = document.getElementById('inputMotherName').value.trim();
-          const godfather = document.getElementById('inputGodfatherName').value.trim();
-          const godmother = document.getElementById('inputGodmotherName').value.trim();
-          const churchName = document.getElementById('inputChurchName').value.trim();
-                    const venueName = document.getElementById('inputVenueName').value.trim();
-          const venueAddr = document.getElementById('inputVenueAddress').value.trim();
-          const dateVal = document.getElementById('inputEventDate').value;
-
-          document.getElementById('heroQuinceName').textContent = qName;
-          document.getElementById('displayFatherName').textContent = father;
-          document.getElementById('displayMotherName').textContent = mother;
-          document.getElementById('displayGodfatherName').textContent = godfather;
-          document.getElementById('displayGodmotherName').textContent = godmother;
-
-          document.getElementById('churchNameDisplay').textContent = churchName;
-          document.getElementById('churchAddressDisplay').textContent = venueAddr;
-          document.getElementById('venueNameDisplay').textContent = venueName;
-          document.getElementById('venueAddressDisplay').textContent = venueAddr;
-          // Mantener el enlace exacto compartido mientras se conserve esta ubicación.
-          // Al personalizar la dirección, se genera un nuevo enlace de búsqueda.
-          const defaultVenueName = 'SEEM ESPECTÁCULOS';
-          const defaultVenueAddress = 'Cam. Viejo a Capultitlan s/n, San Felipe Tlalmimilolpan, 50260 Toluca de Lerdo, Méx.';
-          const mapsUrl = venueName === defaultVenueName && venueAddr === defaultVenueAddress
-            ? 'https://maps.app.goo.gl/5PFnmmpCfRpmnmj1A'
-            : 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(venueName + ' ' + venueAddr);
-          document.getElementById('venueMapsLink').href = mapsUrl;
-
-
-          if (dateVal) {
-            const parsed = new Date(dateVal);
-            if (!isNaN(parsed.getTime())) {
-              targetEventDate = parsed;
-              updateCountdown();
-            }
-          }
-
-          document.getElementById('adminModal').classList.add('hidden');
-          showToast(' Datos del evento y mapas de Google Maps actualizados');
-        });
-
-        // Add New Guest Form Submit
-        document.getElementById('addGuestForm')?.addEventListener('submit', function(e) {
-          e.preventDefault();
-          const name = document.getElementById('newGuestName').value.trim();
-          const tickets = parseInt(document.getElementById('newGuestTickets').value, 10) || 2;
-          const table = document.getElementById('newGuestTable').value.trim() || 'Por asignar';
-          if (!name) return;
-
-          const slug = name.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6) || 'INV';
-          const code = 'PASE-' + slug + '-' + Math.floor(10 + Math.random() * 89);
-
-          const newGuest = {
-            code: code,
-            name: name,
-            assignedTickets: Math.min(15, Math.max(1, tickets)),
-            table: table,
-            status: 'pending',
-            confirmedTickets: 0,
-            attendees: [name],
-            phone: '',
-            song: '',
-            message: ''
-          };
-          guests.push(newGuest);
-          currentGuestCode = newGuest.code;
-          saveState();
-          renderAllGuestViews();
-
-          document.getElementById('newGuestName').value = '';
-          document.getElementById('adminModal').classList.add('hidden');
-          showToast(' Pase creado para ' + name + ' con ' + newGuest.assignedTickets + ' boletos');
-        });
-
-        // Export Guest List to CSV
-        document.getElementById('btnExportCsv')?.addEventListener('click', function() {
-          const rows = [
-            ['Codigo', 'Invitado_Familia', 'Boletos_Asignados', 'Boletos_Confirmados', 'Estado_RSVP', 'Mesa', 'Telefono', 'Cancion_Sugerida', 'Mensaje']
-          ];
-          guests.forEach(function(g) {
-            rows.push([
-              g.code,
-              '"' + (g.name || '').replace(/"/g, '""') + '"',
-              g.assignedTickets,
-              g.confirmedTickets,
-              g.status,
-              '"' + (g.table || '').replace(/"/g, '""') + '"',
-              '"' + (g.phone || '').replace(/"/g, '""') + '"',
-              '"' + (g.song || '').replace(/"/g, '""') + '"',
-              '"' + (g.message || '').replace(/"/g, '""') + '"'
-            ]);
-          });
-          const csv = rows.map(function(r) { return r.join(','); }).join('\r\n');
-          const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'Lista_Invitados_Boletos_XV_Camila.csv';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          showToast(' Lista de invitados y boletos descargada en CSV');
-        });
-      });
-    })();
-  </script>
-<script>
-/* Fotos repetidas: se copian de la original para no cargarlas dos veces */
-document.querySelectorAll('img[data-same-as]').forEach(function(img){
-  var src=document.getElementById(img.dataset.sameAs);
-  if(src) img.src=src.getAttribute('src');
-});
-
-/* Carrusel de retratos (móvil) */
-(function(){
-  var track=document.getElementById('portraitTrack');
-  var prev=document.getElementById('portraitPrev');
-  var next=document.getElementById('portraitNext');
-  var pos=document.getElementById('portraitPosition');
-  if(!track||!prev||!next) return;
-  var slides=Array.prototype.slice.call(track.children);
-  var total=slides.length;
-  function pad(n){return (n<10?'0':'')+n;}
-  function current(){
-    var center=track.scrollLeft+track.clientWidth/2, best=0, dist=Infinity;
-    slides.forEach(function(el,i){
-      var d=Math.abs(el.offsetLeft+el.offsetWidth/2-center);
-      if(d<dist){dist=d;best=i;}
-    });
-    return best;
-  }
-  function update(){
-    var i=current();
-    if(pos) pos.textContent=pad(i+1)+' / '+pad(total);
-    prev.disabled=i===0;
-    next.disabled=i===total-1;
-  }
-  function go(i){
-    i=Math.max(0,Math.min(total-1,i));
-    var el=slides[i];
-    track.scrollTo({left:el.offsetLeft-(track.clientWidth-el.offsetWidth)/2,behavior:'smooth'});
-  }
-  prev.addEventListener('click',function(){go(current()-1);});
-  next.addEventListener('click',function(){go(current()+1);});
-  var ticking=false;
-  track.addEventListener('scroll',function(){
-    if(ticking) return; ticking=true;
-    requestAnimationFrame(function(){update();ticking=false;});
-  },{passive:true});
-  window.addEventListener('resize',update);
-  update();
-})();
-
-/* Paleta de inspiración: el recuadro cambia suavemente de tonalidad sin perder el papel. */
-(function(){
-  var card = document.getElementById('dressCard');
-  var buttons = card ? card.querySelectorAll('[data-color]') : [];
-  var note = document.getElementById('dressColorNote');
-  // Tonalidades diluidas para no comprometer el contraste del texto.
-  var tints = {
-    '#154C99': 'rgba(21, 76, 153, .18)',
-    '#8AB4E1': 'rgba(138, 180, 225, .33)',
-    '#FAF7F2': 'rgba(192, 168, 138, .23)',
-    '#E8E2D9': 'rgba(177, 151, 117, .27)',
-    '#6B8473': 'rgba(107, 132, 115, .27)'
-  };
-  buttons.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var wasOn = btn.getAttribute('aria-pressed') === 'true';
-      buttons.forEach(function(b){ b.setAttribute('aria-pressed', 'false'); });
-      if(wasOn){
-        card.removeAttribute('data-selected-color');
-        if(note) note.textContent = 'Toca un color para ver una idea.';
-        return;
-      }
-      var selected = btn.getAttribute('data-color').toUpperCase();
-      card.style.setProperty('--dress-tint', tints[selected] || 'rgba(138, 180, 225, .20)');
-      card.setAttribute('data-selected-color', selected);
-      btn.setAttribute('aria-pressed', 'true');
-      if(note) note.textContent = 'Vista previa: ' + btn.getAttribute('aria-label') + '. Toca de nuevo para quitar el color.';
-    });
-  });
-})();
-
-/* Cerrar el visor de fotos con Escape */
-document.addEventListener('keydown',function(e){
-  if(e.key==='Escape') document.getElementById('lightboxModal')?.classList.add('hidden');
-});
-</script>
-<script>
-(()=>{
- const preference=window.matchMedia('(prefers-reduced-motion: reduce)');
- if(preference.matches || !('IntersectionObserver' in window)) return;
- const elements=document.querySelectorAll('[data-reveal]');
- const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-   if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}
- }),{threshold:0.08,rootMargin:'0px 0px -20px 0px'});
- document.documentElement.classList.add('motion-ready');
- elements.forEach(el=>observer.observe(el));
- preference.addEventListener('change',e=>{if(e.matches){document.documentElement.classList.remove('motion-ready');observer.disconnect();}});
-})();
-</script></body>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/gallery.js"></script>
+<script src="assets/js/animations.js"></script></body>
 </html>
