@@ -126,4 +126,3 @@ document.querySelectorAll('img[data-same-as]').forEach(function(img) {
   });
 })();
 
-/* El visor de fotografías (incluido Escape) se controla desde app.js. */
