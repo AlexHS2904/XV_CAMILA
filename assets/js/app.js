@@ -414,29 +414,12 @@
       if (!file) return;
       const reader = new FileReader();
       reader.onload = function(ev) {
-        document.getElementById('heroMainImg').src = ev.target.result;
+        const hero = document.getElementById('heroMainImg');
+        hero.removeAttribute('srcset');
+        hero.src = ev.target.result;
         showToast(' Foto principal de la quinceañera actualizada');
       };
       reader.readAsDataURL(file);
-    });
-
-    // Gallery Category Filters
-    document.querySelectorAll('.gallery-filter-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        const filter = btn.getAttribute('data-filter');
-        document.querySelectorAll('.gallery-filter-btn').forEach(function(b) {
-          b.className = 'gallery-filter-btn px-3.5 py-1.5 rounded-full text-xs font-medium bg-white text-royal-700 border border-royal-200 hover:bg-royal-50 transition';
-        });
-        btn.className = 'gallery-filter-btn px-3.5 py-1.5 rounded-full text-xs font-medium bg-royal-600 text-white transition';
-
-        document.querySelectorAll('#galleryGrid .gallery-item').forEach(function(item) {
-          if (filter === 'all' || item.getAttribute('data-category') === filter) {
-            item.classList.remove('hidden');
-          } else {
-            item.classList.add('hidden');
-          }
-        });
-      });
     });
 
     // Visor inmersivo de fotos: imagen sin marco, tarjeta ni descripción visible.
@@ -448,11 +431,19 @@
 
     function openLightbox(trigger) {
       if (!lightbox || !lightboxImg || !trigger) return;
-      const src = trigger.currentSrc || trigger.getAttribute('src');
-      if (!src || src.includes('pendientes/')) return;
-      const caption = trigger.getAttribute('data-caption') || trigger.getAttribute('alt') || 'Fotografía de Camila';
-      previousFocus = document.activeElement;
-      lightboxImg.src = src;
+      const photo = trigger.matches('img') ? trigger : trigger.querySelector('img');
+      if (!photo) return;
+      const caption = photo.dataset.caption || photo.alt || 'Fotografía de Camila';
+      previousFocus = trigger;
+      lightboxImg.src = photo.currentSrc || photo.src;
+      if (photo.dataset.full) {
+        const full = new Image();
+        full.decoding = 'async';
+        full.onload = function() {
+          if (previousFocus === trigger) lightboxImg.src = full.src;
+        };
+        full.src = photo.dataset.full;
+      }
       lightboxImg.alt = caption;
       if (lightboxCaption) lightboxCaption.textContent = caption;
       lightbox.classList.remove('hidden');
@@ -486,6 +477,10 @@
     });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'Tab' && lightbox && !lightbox.classList.contains('hidden')) {
+        e.preventDefault();
+        closeLightboxButton?.focus({ preventScroll: true });
+      }
     });
 
     // Copy Church & Venue Addresses

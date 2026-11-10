@@ -13,7 +13,8 @@ assets/
   js/animations.js
   images/
     paper-*.webp
-    camila-*.webp
+    camila-emblema.webp
+    sesion-xv/camila-*.webp
     itinerario/*.webp
 ```
 
@@ -29,8 +30,8 @@ Visita `http://localhost:8000`. Los datos de los invitados y el panel de adminis
 
 1. Descomprime el ZIP y copia `index.html` y `assets/` a la raíz de tu repositorio clonado.
 2. Verifica con `git status` qué cambiará.
-3. Ejecuta `git add index.html assets .nojekyll README.md` y `git commit -m "Organize Camila invitation assets"`.
+3. Ejecuta `git add index.html assets README.md` y `git commit -m "Actualizar fotos y galería de Camila"`.
 4. Ejecuta `git push origin main` (o el nombre real de tu rama).
 5. Si usas GitHub Pages, confirma en Settings → Pages que apunta a `main` y `/ (root)`.
 
-**Nota:** este proyecto se armó a partir del último HTML autónomo compartido por el usuario. Mantiene las imágenes, los estilos y los scripts sin reescribir las funcionalidades. Las fuentes permanecen embebidas en el CSS para conservar la apariencia y evitar archivos adicionales.
+Las fotografías de la sesión se guardan en `assets/images/sesion-xv/`. El número de cada archivo corresponde al de la foto original. La galería usa vistas ligeras y abre la foto completa al seleccionarla.

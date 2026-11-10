@@ -381,25 +381,102 @@ footer {
   .itinerary-item {animation:none!important;transition:none!important;}
 }
 
-/* =========================================================
-   GALERÍA (6 fotos de distintos tamaños) Y FOTOS ENTRE SECCIONES
-   Las imágenes en assets/images/pendientes/ son espacios temporales.
-   ========================================================= */
-.photo-composition{
-  display:grid;gap:16px;
-  grid-template-columns:repeat(3,1fr);
-  grid-template-rows:230px 230px 300px;
-  grid-auto-rows:220px;
-  grid-template-areas:"a b c" "a d c" "e e f";
+/* La tira respeta las proporciones de cada toma, incluidas las horizontales. */
+.memory-carousel {
+  --photo-height: clamp(310px, 31vw, 386px);
+  --edge-width: clamp(16px, 3vw, 38px);
 }
-.photo-composition img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;border-radius:3px}
-.photo-composition .g-a{grid-area:a}
-.photo-composition .g-b{grid-area:b}
-.photo-composition .g-c{grid-area:c}
-.photo-composition .g-d{grid-area:d}
-.photo-composition .g-e{grid-area:e;object-position:50% 18%}
-.photo-composition .g-f{grid-area:f}
-img.lightbox-trigger[src*="pendientes/"]{cursor:default}
+.memory-track {
+  --edge-left: #000;
+  --edge-right: #000;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.65vw, 22px);
+  width: 100%;
+  padding: 8px 5px 14px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-behavior: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #a2b4c9 transparent;
+  -webkit-mask-image: linear-gradient(to right, var(--edge-left), #000 var(--edge-width), #000 calc(100% - var(--edge-width)), var(--edge-right));
+  mask-image: linear-gradient(to right, var(--edge-left), #000 var(--edge-width), #000 calc(100% - var(--edge-width)), var(--edge-right));
+}
+.memory-track.has-previous { --edge-left: transparent; }
+.memory-track.has-next { --edge-right: transparent; }
+.memory-photo {
+  display: block;
+  flex: none;
+  width: min(calc(var(--photo-height) * var(--photo-ratio)), 86%);
+  margin: 0;
+  padding: 3px;
+  border-radius: 3px;
+  background: #fffefa;
+  box-shadow: 0 0 0 1px #12345a24, 0 4px 10px -6px #1c304c70;
+  cursor: zoom-in;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.memory-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--photo-ratio);
+  object-fit: contain;
+  border-radius: 1px;
+  -webkit-user-drag: none;
+}
+.memory-track.is-dragging, .memory-track.is-dragging * { cursor: grabbing; }
+.memory-track:focus-visible, .memory-photo:focus-visible {
+  outline: 2px solid #154c99;
+  outline-offset: 2px;
+}
+.motion-ready [data-reveal="memory"] {
+  transform: translateY(4px);
+  transition: opacity .8s ease-out, transform .8s ease-out;
+}
+.motion-ready [data-reveal="memory"].is-visible { transform: none; }
+.memory-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+.memory-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 44px;
+  height: 44px;
+  border: 1px solid #a7b9cf;
+  border-radius: 999px;
+  color: #18477a;
+  background: #fffdf8;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.memory-controls .memory-playback { padding: 0 15px; font-size: 12px; }
+.memory-controls button:disabled { opacity: .4; cursor: default; }
+.memory-controls svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.memory-playback .play-icon, .memory-playback.is-paused .pause-icon { display: none; }
+.memory-playback.is-paused .play-icon { display: inline; }
+@media (hover: hover) {
+  .memory-controls button:enabled:hover { background: #ecf1f7; border-color: #6284a9; }
+}
+#inicio #heroMainImg { object-position: 50% 18%; }
+#portraitImg1, #portraitImg2 { object-position: 50% 20%; }
+#portraitImg3 { object-position: 50% 5%; }
 
 /* Fondo de papel para las franjas de fotos */
 .photo-break{
@@ -422,18 +499,14 @@ img.lightbox-trigger[src*="pendientes/"]{cursor:default}
 
 /* (2) Foto panorámica de lado a lado */
 .photo-wide{position:relative;height:clamp(260px,52vw,640px);overflow:hidden;background:#EDE9E1}
-.photo-wide img{display:block;width:100%;height:100%;object-fit:cover}
+.photo-wide img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 26%}
 
 /* (3) Foto vertical final de lado a lado (todo el ancho) */
 .photo-vertical-full{position:relative;width:100%;overflow:hidden;background:#EDE9E1}
 .photo-vertical-full img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover}
 
 @media(max-width:767px){
-  .photo-composition{
-    gap:10px;grid-template-columns:1fr 1fr;
-    grid-template-rows:150px 150px 190px 150px 150px;grid-auto-rows:180px;
-    grid-template-areas:"a b" "a d" "e e" "c f" "c f";
-  }
+  .memory-carousel { --photo-height: clamp(260px, 100vw, 410px); }
   .photo-trio__grid{gap:8px;grid-template-columns:1fr 1.25fr 1fr}
   .photo-trio__grid .photo-trio__center{box-shadow:0 0 0 4px #FCFBF9,0 0 0 5px rgba(138,180,225,.7),0 18px 36px -24px rgba(12,43,89,.5)}
   .photo-duo__grid{gap:10px}
