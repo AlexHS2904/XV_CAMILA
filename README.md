@@ -2,33 +2,59 @@
 
 Invitación del 20 de febrero de 2027. La invitación, las fotografías, el carrusel y el panel se publican como archivos estáticos. Supabase guarda los pases y las confirmaciones.
 
-## Uso de Camila
+## Uso del panel
 
-1. Abre `admin.html` en la dirección publicada e inicia sesión con el usuario y la contraseña compartidos para administrar los XV.
-2. Descarga la plantilla o abre tu propio archivo `.xlsx`. En la hoja **Invitados**, escribe una fila por familia o por invitado individual. Si el libro tiene una sola hoja de datos, también puede usarse su primera hoja visible.
-3. Selecciona el archivo en el panel. Revisa el total de familias, los boletos y los pases que se van a crear o actualizar. Pulsa **Guardar y descargar Excel con enlaces**.
-4. Comparte por WhatsApp el enlace de la fila de cada familia. Al abrirlo, la familia ve su nombre, su cupo y el formulario de asistencia.
-5. Para cambiar el nombre, la mesa o los boletos, edita el archivo descargado y conserva **Folio** y **Enlace**. El mismo enlace mostrará el cambio. También puedes usar **Editar** en el panel.
+Inicia sesión con **camila** y la contraseña de **camila@admin.com**. La contraseña se administra exclusivamente en Supabase Auth.
 
-| Columna | Qué escribir |
+1. En **Agregar familia o invitado**, escribe el nombre, los boletos (1–15) y, opcionalmente, la mesa. **Crear invitación** limpia el formulario y ofrece copiar o abrir el enlace guardado.
+2. Consulta las estadísticas y busca en la lista por nombre. Puedes filtrar por respuesta, ordenar por nombre, mesa, boletos o estado y consultar los detalles. La lista muestra 12 invitaciones por página y tarjetas en móvil.
+3. **Editar** conserva el enlace y las respuestas. **Eliminar** pide confirmación e invalida el enlace.
+4. Para muchas familias, descarga la plantilla, completa una fila por familia y selecciona el Excel. Revisa las filas nuevas, actualizadas, sin cambios o con conflictos antes de guardar.
+5. Descarga el Excel con enlaces y compártelos individualmente. Para cambios posteriores, utiliza esa copia exportada.
+
+### Estadísticas
+
+Los indicadores se calculan sobre todos los pases guardados, independientemente del filtro o la página de la lista.
+
+| Indicador | Cálculo |
 | --- | --- |
-| Familia o invitado | El nombre tal como aparecerá en la invitación. También se acepta el encabezado **Nombre**. |
-| Boletos | Un número entero del 1 al 15. |
-| Mesa | Opcional. Al omitir la columna se conserva la mesa anterior. Al vaciar una celda de esta columna se quita esa mesa. |
-| Folio | Opcional la primera vez. Para dos familias con el mismo nombre, usa folios distintos como F-01 y F-02. |
-| Enlace | El panel lo devuelve como un hipervínculo de Excel. Quien lo recibe puede consultar y responder por ese pase. |
+| Invitaciones generadas | Número de pases individuales o familiares |
+| Boletos asignados | Suma del cupo de todos los pases |
+| Boletos confirmados | Suma de personas confirmadas |
+| Boletos pendientes | Cupo de los pases que todavía no respondieron |
+| Boletos no utilizados | Cupo menos asistentes de los pases que ya respondieron, incluidos los rechazos |
+| Familias respondidas / pendientes / que no asistirán | Número de pases en cada categoría |
+| Porcentaje de confirmación | Boletos confirmados / boletos asignados |
+| Porcentaje de respuesta | Invitaciones respondidas / invitaciones generadas |
 
-En la primera carga, un nombre sin folio genera una referencia estable. También puedes volver a cargar el original si solo cambiaste boletos o mesa. Para corregir el nombre, usa la copia que ya contiene el folio. Quitar una fila del Excel deja su pase guardado. Un error en una fila detiene la carga completa y no cambia los otros pases. Un cupo inferior al número ya confirmado se señala para revisión.
+Siempre se cumple **asignados = confirmados + pendientes + no utilizados**. Una familia con seis boletos que confirma cuatro aporta cuatro confirmados y dos no utilizados. **Confirmados** incluye respuestas parciales; el filtro **Confirmación parcial** permite verlas por separado.
 
-El archivo devuelto conserva el orden, las demás hojas y las columnas propias de la lista. La base de datos recibe los datos del pase. **Descargar todos los pases en Excel** recupera la lista completa desde cualquier equipo con acceso al panel e incluye el estado, los nombres confirmados y los datos que cada familia haya compartido.
+La lista y el dashboard se actualizan después de las operaciones del panel, al recuperar el foco y cada 30 segundos mientras la pestaña está visible y la sesión activa. **Actualizar** permite hacerlo manualmente. Se usa consulta periódica para evitar suscripciones y permisos adicionales de Realtime. Si falla la conexión se conserva la última lectura y se indica que no pudo actualizarse.
 
-El acceso del panel pide **Usuario** y **Contraseña**. Usa **camila** y la contraseña de la cuenta **camila@admin.com**. El correo se utiliza internamente para Supabase Auth. La contraseña se administra en Supabase y su recuperación se realiza desde ese panel.
+### Excel e identidad de las invitaciones
+
+La plantilla muestra únicamente **Familia o invitado**, **Boletos** y **Mesa**. Los identificadores se generan automáticamente; el organizador no debe escribir folios.
+
+- La exportación incluye una columna **ID de invitación** oculta. Conserva esa columna y los enlaces para actualizar nombres, mesas o cupos sin cambiar de invitación.
+- Volver a importar exactamente el archivo original conserva las identidades calculadas a partir del archivo, hoja y fila. Dos filas con el mismo nombre reciben identidades distintas.
+- Un archivo nuevo o modificado que no contiene identidades y coincide por nombre con pases existentes requiere elegir cuál actualizar o crear una familia independiente. El nombre nunca se utiliza como identificador único. Para evitar resolver estas coincidencias, trabaja sobre el Excel exportado.
+- La vista previa bloquea IDs eliminados, enlaces incompatibles, dos filas que apunten al mismo pase y cupos inferiores a la asistencia ya confirmada.
+- La importación solo cambia nombre, cupo y mesa. **Nunca sobrescribe asistentes, estados, respuestas ni fechas de confirmación**. Omitir la columna Mesa conserva la anterior; vaciar una celda de Mesa la elimina.
+- Quitar filas del Excel no elimina pases. Una fila inválida revierte la operación completa.
+
+El archivo devuelto después de importar conserva las columnas adicionales del organizador y las otras hojas. Esas columnas adicionales permanecen en el archivo, no se almacenan como campos de Supabase. **Exportar invitaciones** recupera todos los pases actuales e incluye nombre, boletos asignados y confirmados, mesa, asistencia, enlace, asistentes, teléfono, canción, mensaje y fecha de confirmación.
+
+Los archivos usan encabezados azules, filas alternadas, anchos adecuados, primera fila inmovilizada, filtros, tabla y colores por estado. Los enlaces muestran **Ver invitación** y son clicables. La exportación completa no agrega filas vacías. Las fechas se muestran en la zona horaria de Ciudad de México. El ID oculto sigue siendo un dato administrativo; el token del enlace es el que permite acceder al pase.
+
+### Confirmación del invitado
+
+Después de guardar en Supabase se abre `?invitado=TOKEN#respuesta-guardada`, con los datos devueltos por la base de datos. La pantalla distingue asistencia y rechazo, muestra el cupo, asistentes y un resumen de respuestas. Al recargar vuelve a consultar el mismo token. **Editar mi respuesta** precarga la respuesta existente y actualiza el mismo pase. Un error de guardado mantiene el formulario y no muestra éxito.
 
 ## Proyecto conectado y seguridad
 
 El proyecto exclusivo de esta invitación es **XV_CAMILA**, referencia `bwwmrtxuninbqvoyuruo`, URL `https://bwwmrtxuninbqvoyuruo.supabase.co`. No usa ER_COACHING ni car-agency.
 
-- `camila_xv.pases`: folio, token UUID aleatorio único, nombre individual/familiar, boletos (1–15), mesa, estado, confirmados, asistentes, teléfono, canción y mensaje.
+- `camila_xv.pases`: folio, token UUID aleatorio único, nombre individual/familiar, boletos (1–15), mesa, estado, confirmados, asistentes, teléfono, canción, mensaje y fecha real de última confirmación (`confirmado_en`).
 - `camila_xv.organizadoras`: UUID de las cuentas Auth autorizadas. Una cuenta autenticada sin membresía no puede administrar.
 - Ambas tablas tienen RLS habilitado, sin permisos directos para `anon` ni `authenticated`, y están en un esquema privado. La ausencia de políticas es intencional: denegación por defecto. Supabase Advisor puede mostrar dos avisos **informativos** `rls_enabled_no_policy`.
 - La API pública ofrece `camila_xv_ver` y `camila_xv_responder`, limitadas al token recibido. No hay búsqueda de invitados por nombre ni listado público.
@@ -61,9 +87,14 @@ cp .env.example .env
 node --env-file=.env scripts/configure.mjs
 ```
 
-`INVITATION_URL` vacío hace que los enlaces apunten al mismo directorio que `admin.html`. En localhost serán enlaces locales. Para distribuir invitaciones, genera el Excel desde el sitio publicado o configura la URL final completa, terminada en `/`.
+`INVITATION_URL` vacío hace que los enlaces apunten al mismo directorio que `admin.html`. En localhost serán enlaces locales. Para distribuir invitaciones, genera el Excel desde el sitio publicado o configura la URL final completa, terminada en `/`: `https://alexhs2904.github.io/XV_CAMILA/`. En una página pública se rechaza una configuración que produzca enlaces de localhost. La prueba automatizada comprueba que se conserve la carpeta `/XV_CAMILA/` de GitHub Pages.
 
-La migración aplicada mediante MCP está en `supabase/migrations/20261125032250_camila_pases_seguros.sql`. `supabase/instalar.sql` conserva una copia idéntica compatible con SQL Editor; una prueba evita divergencias. No vuelvas a instalarla en este proyecto: ya está aplicada y registrada. Para otro entorno vacío, aplica una de las dos copias, no ambas. No expongas `camila_xv` en Data API; conserva `public` como esquema de API.
+Migraciones aplicadas mediante MCP únicamente a XV_CAMILA:
+
+1. `20261125032250_camila_pases_seguros.sql`: tablas, permisos y funciones iniciales. `supabase/instalar.sql` es una copia idéntica de esta base, compatible con SQL Editor.
+2. `20261125044648_fecha_confirmacion.sql`: agrega `confirmado_en` y actualiza la función de respuesta para escribir la hora del servidor. Conserva los permisos, el bloqueo de fila y la validación del cupo. Las respuestas históricas sin fecha permanecen en NULL hasta su próxima actualización; no se inventan fechas.
+
+No vuelvas a instalarlas en este proyecto: ambas están registradas. Para un entorno vacío aplica las migraciones en orden, o `instalar.sql` seguido de la segunda migración; no dupliques la base. No se crearon tablas adicionales para esta mejora. No expongas `camila_xv` en Data API; conserva `public` como esquema de API.
 
 ## Desarrollo y validación
 
@@ -78,12 +109,14 @@ Abre `http://127.0.0.1:8000/admin.html`. Las herramientas de pruebas requieren N
 ```bash
 npm ci
 npm test
+node tests/excel-browser.mjs
+node tests/admin-browser.mjs
 node tests/visual.mjs
 node tests/auth-settings.mjs
 node tests/live.mjs
 ```
 
-`npm test` comprueba recursos, rutas, anclas, configuración y correspondencia de migraciones. `visual.mjs` prueba música, carruseles, lightbox y el correo que envía el formulario, y genera capturas ignoradas por Git en `test-results/`. `auth-settings.mjs` verifica la configuración de Auth y el rechazo real de registros públicos; no intenta un registro si la opción sigue habilitada.
+`npm test` ejecuta diez pruebas sobre recursos, rutas, anclas, configuración, migración base, estadísticas, identidades de importación y URL pública. `excel-browser.mjs` comprueba el ciclo exportar/reimportar, familias con nombres iguales, IDs ocultos, enlaces, fechas, estilos y rangos del archivo OOXML, sin crear datos en Supabase. `admin-browser.mjs` simula consultas simultáneas y fallos de actualización después de guardar, y verifica la alineación móvil del formulario. `visual.mjs` prueba música, carruseles, lightbox y el correo que envía el formulario, y genera capturas ignoradas por Git en `test-results/`. `auth-settings.mjs` verifica la configuración de Auth y el rechazo real de registros públicos; no intenta un registro si la opción sigue habilitada.
 
 `live.mjs` es una prueba de integración supervisada contra **XV_CAMILA**. Genera una contraseña temporal exclusivamente en memoria, publica su hash bcrypt y pausa para crear/autorizar una cuenta ficticia por SQL. La infraestructura de QA debe crear la fila de `auth.users` con email confirmado y su identidad `email` de `auth.identities`; no se modifica la cuenta real. En su segunda pausa se revoca la membresía QA para probar el rechazo de cuentas autenticadas sin autorización. Al finalizar se elimina el usuario temporal por su UUID exacto. El script elimina los pases de su prefijo, cierra la sesión y nunca imprime la contraseña ni el JWT. Si se interrumpe, elimina también los registros del prefijo QA indicado al iniciar. No ejecutes estas pruebas con datos reales.
 
@@ -94,24 +127,25 @@ node tests/live.mjs
 | Inicio/cierre de sesión y contraseña incorrecta | Correcto con cuenta temporal; JWT rechazado después del cierre confirmado |
 | Registro público | Deshabilitado; endpoint de Auth rechaza con `signup_disabled` |
 | Crear, editar y eliminar individuales/familias | Correcto; eliminar invalida el enlace |
-| Excel: importar, reimportar y exportar | Correcto; enlaces únicos y estables, lote inválido revertido |
-| Invitación personalizada y asistencia | Correcto; acepta asistencia y rechazo con persistencia real |
+| Excel: importar, reimportar y exportar | Original y exportación sin duplicados; familias iguales independientes, resolución explícita de conflictos y columnas adicionales conservadas |
+| Dashboard | Totales consistentes, confirmación parcial 4/6, rechazo, actualización de respuesta y recarga automática al recuperar foco |
+| Invitación personalizada y asistencia | Pantallas de éxito y rechazo persistentes; edición precargada, fecha del servidor, error de guardado sin éxito falso |
 | Límite de boletos | Correcto en UI y API; tampoco permite reducir por debajo de lo confirmado |
 | Recarga de invitación y panel | Datos y sesión recuperados correctamente |
 | Acceso no autorizado | Anónimo y usuario autenticado sin membresía rechazados; metadatos falsificados no conceden acceso |
 | Vista móvil | Chrome con tamaños de 320, 390 y 768 px, sin desbordamiento horizontal de página |
-| Recursos y presentación | 117 archivos visuales idénticos al origen; música, carruseles y lightbox operativos |
+| Recursos y presentación | 115 recursos públicos originales idénticos; cambios aislados al panel y a la pantalla de confirmación, música/carruseles/lightbox operativos |
 | Limpieza | Sin pases, cuentas QA ni sesiones de prueba restantes; la cuenta definitiva se conserva |
 
-Cuatro pruebas estáticas correctas, cero errores JavaScript detectados y cero vulnerabilidades en las dependencias de desarrollo conservadas. La prueba móvil usa emulación de Chrome, no dispositivos físicos. Security Advisor reportó los dos avisos informativos por denegación RLS descritos arriba y una advertencia: la [protección contra contraseñas filtradas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) está desactivada en Auth. Este ajuste adicional queda disponible en el dashboard. Performance Advisor no reportó hallazgos.
+Diez pruebas unitarias/estáticas correctas, pruebas funcionales de Chrome y Supabase satisfactorias y revisión independiente del Excel generado mediante openpyxl. No se agregaron dependencias de producción. La prueba móvil usa emulación de Chrome, no dispositivos físicos. Security Advisor reportó los dos avisos informativos por denegación RLS descritos arriba y una advertencia: la [protección contra contraseñas filtradas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) está desactivada en Auth. Este ajuste adicional queda disponible en el dashboard. Performance Advisor no reportó hallazgos.
 
-La cuenta definitiva está autorizada y el registro público fue deshabilitado y verificado. El inicio/cierre y las operaciones se probaron con una cuenta temporal independiente; no se solicitó ni cambió la contraseña real. Antes de publicar, prueba también tu acceso **camila** con tu contraseña.
+La cuenta definitiva está autorizada y el registro público fue deshabilitado y verificado. El inicio/cierre y las operaciones se probaron con una cuenta temporal independiente; no se solicitó ni cambió la contraseña real. El organizador ya validó personalmente su acceso y el flujo anterior; esta mejora queda disponible para revisión local antes de publicar.
 
 Para tu revisión local, deja el servidor del comando anterior ejecutándose:
 
 - Panel: http://127.0.0.1:8000/admin.html
 - Invitación: http://127.0.0.1:8000/
-- Invitación personalizada: usa **Ver** en el panel; genera `/?invitado=TOKEN` con el token real de ese pase.
+- Invitación personalizada: usa **Abrir** en el panel; genera `/?invitado=TOKEN` con el token real de ese pase.
 
 Los cambios que hagas en el panel local se guardan en el proyecto real de Supabase. Los enlaces generados localmente apuntan a `127.0.0.1`; para enviarlos a invitados, expórtalos desde la URL pública después de autorizar la publicación.
 
@@ -123,6 +157,6 @@ GitHub Pages está configurado con **main / (root)**. Cada push a `main` activa 
 
 Esta actualización se entrega en la rama `revision/supabase-camila`, para revisión antes de publicar. El historial y la configuración de despliegue se conservan. **Fusionar esta rama a `main` publicará automáticamente**; no se ha realizado despliegue manual ni cambiado la fuente de Pages.
 
-La versión fuente se tomó de `XV_CAMILA 3`. El HTML de la invitación, estilos, imágenes, audio, animaciones, galería y JavaScript visual se conservaron byte por byte. Solo se completaron conexión, administración, seguridad, documentación y pruebas.
+La versión fuente se tomó de `XV_CAMILA 3`. Se conservan sus estilos públicos, imágenes, audio, animaciones, galería y JavaScript visual. Esta revisión rediseña el panel y agrega una sección de confirmación con estilos aislados, sin rediseñar la invitación existente.
 
-La lista antigua guardada en un navegador puede migrarse desde su exportación CSV: ábrela en Excel, guárdala como `.xlsx` e impórtala. Se reconocen `Codigo`, `Invitado_Familia` y `Boletos_Asignados`. Las confirmaciones se registran cuando cada familia responde desde su nuevo enlace.
+La lista antigua guardada en un navegador puede migrarse desde su exportación CSV: ábrela en Excel, guárdala como `.xlsx` e impórtala. Se reconocen `Invitado_Familia` y `Boletos_Asignados`. Quita los códigos antiguos que no correspondan a pases de Supabase: el panel generará identidades nuevas. Las confirmaciones se registran cuando cada familia responde desde su nuevo enlace.

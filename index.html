@@ -12,6 +12,7 @@
       imagesrcset="assets/images/sesion-xv/camila-3348-640.webp 640w, assets/images/sesion-xv/camila-3348-1024.webp 1024w, assets/images/sesion-xv/camila-3348-1440.webp 1440w"
       imagesizes="(max-width: 767px) max(100vw, 65vh), 432px" fetchpriority="high"/>
 <link rel="stylesheet" href="assets/css/styles.css?v=3"/>
+<link rel="stylesheet" href="assets/css/confirmation.css"/>
 </head>
 <body class="selection:bg-royal-200 selection:text-royal-900">
 <!-- Top Navigation & Floating Controls -->
@@ -627,6 +628,22 @@
 </div>
 <p id="rsvpFeedback" role="status" class="local-note"></p>
 </div></section>
+<section id="respuesta-guardada" class="confirmation-view separate-view" hidden aria-labelledby="successTitle">
+  <div class="confirmation-shell">
+    <span class="confirmation-icon" aria-hidden="true">✓</span>
+    <p class="confirmation-eyebrow">Mis XV de Camila</p>
+    <h2 id="successTitle" class="font-cursive" tabindex="-1">¡Asistencia confirmada!</h2>
+    <p id="successMessage">Tu respuesta se registró correctamente. ¡Qué alegría compartir este día contigo!</p>
+    <div class="confirmation-ticket">
+      <span class="confirmation-eyebrow">Tu invitación</span><h3 id="successName" class="font-editorial"></h3>
+      <div class="confirmation-counts"><div><strong id="successAssigned"></strong><span>Boletos asignados</span></div><div><strong id="successConfirmed"></strong><span>Boletos confirmados</span></div></div>
+      <div id="successAttendees"><h4>Nos acompañarán</h4><ul id="successNames"></ul></div>
+      <dl id="successExtras"></dl><p id="successDate"></p>
+    </div>
+    <div class="confirmation-actions"><a class="confirm-button" href="#boletos-rsvp">Regresar a la invitación <span aria-hidden="true">↗</span></a><a id="editResponse" href="#confirmar-asistencia">Editar mi respuesta</a></div>
+    <p class="confirmation-signature font-cursive">Con cariño, Camila</p>
+  </div>
+</section>
 <!-- FOOTER -->
 <footer class="py-12 px-4 bg-royal-900 text-cream-100 text-center space-y-4 layout-attr-1" data-invitation="" data-reveal="soft">
 <p class="font-cursive text-4xl text-royal-200">Camila</p>

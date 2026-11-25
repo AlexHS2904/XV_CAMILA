@@ -26,9 +26,11 @@
   }
   function view() {
     const showingForm = Boolean(pass && location.hash === '#confirmar-asistencia');
-    document.querySelectorAll('[data-invitation]').forEach(section => {section.hidden = showingForm;});
+    const showingSuccess = Boolean(pass && pass.estado !== 'pendiente' && location.hash === '#respuesta-guardada');
+    document.querySelectorAll('[data-invitation]').forEach(section => {section.hidden = showingForm || showingSuccess;});
     id('confirmar-asistencia').hidden = !showingForm;
-    if (showingForm) window.scrollTo(0,0);
+    id('respuesta-guardada').hidden = !showingSuccess;
+    if (showingForm || showingSuccess) {window.scrollTo({top:0,behavior:'instant'});if(showingSuccess)id('successTitle').focus({preventScroll:true});}
     else if (location.hash === '#boletos-rsvp') id('boletos-rsvp').scrollIntoView();
   }
   function render() {
@@ -60,7 +62,22 @@
     id('rsvpSong').value = pass.cancion;
     id('rsvpMessage').value = pass.mensaje;
     attendeeFields(Number(seats.value),pass.asistentes);
-    attendanceFields(); view();
+    attendanceFields(); renderSuccess(); view();
+  }
+  function renderSuccess() {
+    const attending=pass.estado==='asiste';
+    id('successTitle').textContent=attending?'¡Asistencia confirmada!':'Gracias por avisarnos';
+    id('successMessage').textContent=attending?'Tu respuesta se registró correctamente. ¡Qué alegría compartir este día contigo!':'Registramos que no podrán acompañarnos. Gracias por hacérnoslo saber y por ser parte de este momento.';
+    id('successName').textContent=pass.nombre;
+    id('successAssigned').textContent=pass.boletos; id('successConfirmed').textContent=pass.confirmados;
+    id('successAttendees').hidden=!pass.asistentes.length;
+    id('successNames').replaceChildren(...pass.asistentes.map(name=>{const li=document.createElement('li');li.textContent=name;return li;}));
+    id('successExtras').replaceChildren();
+    for(const [title,value]of [['Teléfono',pass.telefono],['Canción',pass.cancion],['Mensaje',pass.mensaje]]) {
+      if(!value)continue;const block=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');
+      dt.textContent=title;dd.textContent=value.length>150?value.slice(0,147)+'…':value;block.append(dt,dd);id('successExtras').append(block);
+    }
+    id('successDate').textContent=pass.confirmado_en?'Respuesta guardada el '+new Intl.DateTimeFormat('es-MX',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Mexico_City'}).format(new Date(pass.confirmado_en)):'';
   }
   async function loadPass() {
     id('retryPass').hidden = true;
@@ -94,6 +111,7 @@
     id('saveRsvp').disabled = true; id('rsvpFeedback').textContent = 'Guardando tu respuesta…';
     try {
       pass = await CamilaPases.rpc('responder',{p_token:token,respuesta}); render();
+      location.hash = 'respuesta-guardada'; view();
       id('rsvpFeedback').textContent = yes ? 'Gracias. Quedaron confirmados ' + tickets(pass.confirmados) + '.' : 'Tu respuesta quedó guardada. Gracias por avisarnos.';
     } catch (err) {id('rsvpFeedback').textContent = err.message;}
     finally {id('saveRsvp').disabled = false;}

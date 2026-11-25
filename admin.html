@@ -9,60 +9,63 @@
   <script defer src="assets/vendor/supabase-2.119.0.js"></script>
   <script defer src="assets/vendor/jszip-3.10.1.min.js"></script>
   <script defer src="assets/js/pases-api.js"></script>
+  <script defer src="assets/js/admin-model.js"></script>
   <script defer src="assets/js/excel-invitados.js"></script>
   <script defer src="assets/js/admin.js"></script>
 </head>
 <body>
   <main>
-    <header>
-      <div class="brand"><img src="assets/images/camila-emblema.webp" width="66" height="66" alt=""><div><a href="./">Mis XV de Camila</a><h1>Invitados</h1></div></div>
-      <button class="secondary" id="logout" type="button" hidden>Cerrar sesión</button>
+    <header class="page-header">
+      <div class="brand"><img src="assets/images/camila-emblema.webp" width="72" height="72" alt="Emblema de Camila"><div><a href="./" class="eyebrow">Mis XV de Camila · 20 febrero 2027</a><h1>Cada invitado, un recuerdo.</h1><p>Organiza los pases y acompaña cada respuesta.</p></div></div>
+      <button class="secondary" id="logout" type="button" hidden>Cerrar sesión ↗</button>
     </header>
-    <div id="loginBox" class="card login">
-      <h2>Acceso de Camila</h2>
+    <section id="loginBox" class="card login" aria-labelledby="loginTitle">
+      <span class="eyebrow">Un día para recordar</span><h2 id="loginTitle">Bienvenida al panel</h2><p class="muted">Todo listo para preparar una celebración especial.</p>
       <form id="loginForm">
         <label>Usuario<input id="username" type="text" required autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="50" placeholder="camila"></label>
         <label>Contraseña<input id="password" type="password" required autocomplete="current-password"></label>
-        <button type="submit">Entrar al panel</button>
+        <button type="submit">Entrar al panel →</button>
       </form>
       <p class="feedback" id="loginStatus" role="status"></p>
-      <a href="assets/excel/Plantilla_invitados.xlsx" download>Descargar plantilla de Excel</a>
-    </div>
+    </section>
     <div id="panel" hidden>
-      <section class="card" aria-labelledby="importTitle">
-        <div class="heading"><h2 id="importTitle">Importar desde Excel</h2><a href="assets/excel/Plantilla_invitados.xlsx" download>Descargar plantilla</a></div>
-        <p>Escribe una familia por fila con su nombre y sus boletos. Puedes agregar la mesa y conservar tus propias columnas.</p>
-        <label class="file" for="archivo">Seleccionar archivo .xlsx<input id="archivo" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
-        <p id="fileStatus" class="feedback" role="status"></p>
-        <div id="preview" hidden>
-          <h3>Revisar lista</h3>
-          <p id="previewSummary"></p>
-          <div class="table-wrap"><table><thead><tr><th>Fila</th><th>Familia o invitado</th><th>Boletos</th><th>Acción</th></tr></thead><tbody id="sample"></tbody></table></div>
-          <p id="partial" class="hint"></p>
-          <button id="confirmImport" type="button">Guardar y descargar Excel con enlaces</button>
-        </div>
-        <a class="button secondary" id="lastDownload" hidden download>Volver a descargar este Excel</a>
-        <p class="hint">Para corregir un nombre, edita el archivo de regreso y conserva su folio. Si dos familias se llaman igual, asígnales folios distintos, por ejemplo F-01 y F-02.</p>
-      </section>
-      <section class="card" aria-labelledby="savedTitle">
-        <div class="heading"><h2 id="savedTitle">Pases guardados</h2><button id="refresh" class="secondary" type="button">Actualizar</button></div>
-        <p id="totals" class="totals"></p>
-        <div class="actions"><button id="downloadAll" class="secondary" type="button">Descargar todos los pases en Excel</button><button id="newPass" class="secondary" type="button">Agregar un pase</button></div>
-        <form id="onePass" hidden>
-          <h3 id="editTitle">Agregar un pase</h3>
-          <div class="fields">
-            <label>Familia o invitado<input id="oneName" maxlength="160" required></label>
-            <label>Boletos<input id="oneCount" type="number" inputmode="numeric" min="1" max="15" value="1" required></label>
-            <label>Mesa (opcional)<input id="oneTable" maxlength="80"></label>
-            <label>Folio (opcional)<input id="oneFolio" maxlength="50"></label>
-          </div>
-          <div class="actions"><button type="submit">Guardar pase</button><button id="cancelEdit" class="secondary" type="button">Cancelar</button></div>
+      <section class="card create-card" aria-labelledby="createTitle">
+        <div class="section-heading"><div><span class="eyebrow">01 / Una nueva invitación</span><h2 id="createTitle">Agregar familia o invitado</h2><p class="muted">Reserva su lugar y comparte un enlace personal.</p></div><span class="section-mark" aria-hidden="true">✧</span></div>
+        <form id="onePass">
+          <div class="fields"><label>Nombre de familia o invitado<input id="oneName" maxlength="160" placeholder="Ej. Familia Hernández" required></label><label>Boletos asignados<input id="oneCount" type="number" inputmode="numeric" min="1" max="15" value="1" required></label><label><span>Mesa <span class="optional">opcional</span></span><input id="oneTable" maxlength="80" placeholder="Ej. 8"></label></div>
+          <button type="submit">Crear invitación <span aria-hidden="true">＋</span></button>
         </form>
-        <p id="tableStatus" class="feedback" role="status"></p>
-        <div class="table-wrap"><table><thead><tr><th>Familia o invitado</th><th>Boletos</th><th>Mesa</th><th>Asistencia</th><th>Enlace</th></tr></thead><tbody id="saved"></tbody></table></div>
+        <p class="feedback" id="createStatus" role="status"></p>
+        <div id="createdLink" class="success-strip" hidden><span>Tu invitación está lista para compartir.</span><div class="actions"><button id="copyCreated" type="button" class="secondary">Copiar enlace</button><a id="openCreated" class="button secondary" target="_blank" rel="noopener noreferrer">Abrir invitación ↗</a></div></div>
       </section>
-      <footer><a href="./">Ver invitación</a><a href="./?vista=ajustes">Vista previa de los datos del evento</a></footer>
+      <section class="dashboard" aria-labelledby="dashboardTitle">
+        <div class="section-heading"><div><span class="eyebrow">02 / La celebración en números</span><h2 id="dashboardTitle">Así va la lista</h2></div><p class="sync-note" id="lastSync" role="status">Consultando respuestas…</p></div>
+        <div class="dashboard-layout">
+          <div class="metrics" id="metrics"></div>
+          <div class="card chart-card"><h3>Distribución de boletos</h3><div class="donut" id="ticketChart" role="img" aria-label="Sin boletos"><div><strong id="chartTotal">0</strong><span>boletos asignados</span></div></div><div id="chartLegend" class="chart-legend"></div><p class="hint">Los lugares libres de una familia que ya respondió cuentan como no utilizados.</p></div>
+        </div>
+      </section>
+      <section class="card guests-card" aria-labelledby="savedTitle">
+        <div class="section-heading"><div><span class="eyebrow">03 / Personas que nos acompañan</span><h2 id="savedTitle">Lista de invitados <span id="invitationCount" class="count-pill">0</span></h2></div><button id="refresh" class="secondary" type="button">↻ Actualizar</button></div>
+        <div class="list-tools"><label class="search-label"><span class="sr-only">Buscar por nombre de familia o invitado</span><input id="guestSearch" type="search" placeholder="Buscar familia o invitado…"></label><label>Ordenar por<select id="sortBy"><option value="nombre">Nombre</option><option value="mesa">Mesa</option><option value="boletos">Boletos</option><option value="estado">Estado</option></select></label><button id="sortDirection" class="secondary" type="button" aria-label="Cambiar a orden descendente">↑ Ascendente</button></div>
+        <div class="filters" id="filters" role="group" aria-label="Filtrar por asistencia"><button type="button" data-filter="todos" aria-pressed="true">Todos</button><button type="button" data-filter="confirmados" aria-pressed="false">Confirmados</button><button type="button" data-filter="pendiente" aria-pressed="false">Pendientes</button><button type="button" data-filter="rechazado" aria-pressed="false">No asisten</button><button type="button" data-filter="parcial" aria-pressed="false">Confirmación parcial</button></div>
+        <p id="tableStatus" class="feedback" role="status"></p>
+        <div id="guestTable" class="table-wrap"><table><thead><tr><th>Familia o invitado</th><th>Boletos</th><th>Mesa</th><th>Asistencia</th><th>Última confirmación</th><th><span class="sr-only">Acciones</span></th></tr></thead><tbody id="saved"></tbody></table></div>
+        <div id="guestCards" class="guest-cards"></div>
+        <div id="emptyState" class="empty-state" hidden><span aria-hidden="true">✧</span><h3 id="emptyTitle">Tu lista comienza aquí</h3><p id="emptyText">Agrega tu primera familia arriba o importa tu lista de Excel.</p><button id="emptyAction" class="secondary" type="button">Agregar una invitación</button></div>
+        <nav id="pagination" class="pagination" aria-label="Páginas de invitados"><span id="pageInfo" aria-live="polite"></span><div class="actions"><button id="previousPage" type="button" class="secondary">← Anterior</button><button id="nextPage" type="button" class="secondary">Siguiente →</button></div></nav>
+      </section>
+      <section class="card excel-card" aria-labelledby="importTitle">
+        <div class="section-heading"><div><span class="eyebrow">04 / Tu lista, también en Excel</span><h2 id="importTitle">Importar y exportar</h2><p class="muted">Organiza muchas invitaciones a la vez, con sus enlaces siempre a mano.</p></div><a class="text-link" href="assets/excel/Plantilla_invitados.xlsx" download>Descargar plantilla ↓</a></div>
+        <div class="excel-grid"><div><h3>Importar invitados</h3><p class="hint">Una fila por familia: nombre, boletos y mesa opcional. Revisa los cambios antes de guardarlos.</p><div class="file-picker"><input class="sr-only" id="archivo" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-label="Seleccionar archivo Excel"><label class="button secondary" for="archivo">Seleccionar Excel</label><span id="fileName">Ningún archivo seleccionado</span></div></div><div class="export-block"><h3>Descargar tu lista completa</h3><p class="hint">Incluye enlaces personales, asistentes, respuestas y fechas de confirmación.</p><button id="downloadAll" class="secondary" type="button">Exportar invitaciones ↓</button></div></div>
+        <p id="fileStatus" class="feedback" role="status"></p>
+        <div id="preview" class="import-preview" hidden><h3>Revisa los cambios</h3><p id="previewSummary"></p><div class="table-wrap"><table><thead><tr><th>Fila</th><th>Familia o invitado</th><th>Boletos</th><th>Resultado / resolver</th></tr></thead><tbody id="sample"></tbody></table></div><button id="confirmImport" type="button">Guardar y descargar Excel con enlaces</button></div>
+        <a class="button secondary" id="lastDownload" hidden download>Volver a descargar este Excel</a><p class="hint">Para futuras correcciones, usa el Excel exportado. Conserva las identidades automáticamente, incluso si cambias los nombres.</p>
+      </section>
+      <footer><span>Hecho para un día inolvidable · Camila XV</span><a href="./">Ver invitación ↗</a></footer>
     </div>
   </main>
+  <dialog id="editDialog" aria-labelledby="editTitle"><form id="editPass"><div class="section-heading"><h2 id="editTitle">Editar invitación</h2><button type="button" class="icon-button" data-close="editDialog" aria-label="Cerrar edición">×</button></div><p class="muted">Su enlace y sus respuestas se conservan.</p><label>Familia o invitado<input id="editName" maxlength="160" required></label><div class="dialog-fields"><label>Boletos asignados<input id="editCount" type="number" min="1" max="15" required></label><label>Mesa opcional<input id="editTable" maxlength="80"></label></div><p id="editStatus" class="feedback" role="status"></p><div class="actions"><button type="submit">Guardar cambios</button><button type="button" class="secondary" data-close="editDialog">Cancelar</button></div></form></dialog>
+  <dialog id="detailsDialog" aria-labelledby="detailsTitle"><div class="section-heading"><span class="eyebrow">El detalle de su invitación</span><button type="button" class="icon-button" data-close="detailsDialog" aria-label="Cerrar detalles">×</button></div><h2 id="detailsTitle"></h2><div id="detailsBody"></div><button type="button" class="secondary" data-close="detailsDialog">Cerrar</button></dialog>
 </body>
 </html>

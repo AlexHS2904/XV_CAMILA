@@ -24,6 +24,10 @@
     if (!uuid.test(token)) throw new Error('El servidor devolvió un pase sin enlace válido.');
     const url = new URL(window.CAMILA_CONFIG.invitationUrl || './', window.location.href);
     if (!['http:', 'https:'].includes(url.protocol)) throw new Error('Abre el panel desde el sitio publicado o un servidor local.');
+    const local = hostname => /^(localhost|127\.[\d.]+|\[::1\]|0\.0\.0\.0)$/i.test(hostname);
+    if (!local(window.location.hostname) && local(url.hostname)) {
+      throw new Error('La URL de la invitación publicada no puede apuntar a localhost. Revisa la configuración.');
+    }
     url.search = '';
     url.hash = '';
     url.searchParams.set('invitado', token);
