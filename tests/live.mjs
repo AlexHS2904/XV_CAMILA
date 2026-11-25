@@ -11,7 +11,7 @@ vm.runInNewContext(readFileSync('assets/js/config.js','utf8'), sandbox);
 const {supabaseUrl, publishableKey} = sandbox.window.CAMILA_CONFIG;
 assert.equal(supabaseUrl, 'https://bwwmrtxuninbqvoyuruo.supabase.co');
 const username = 'qa-' + Date.now();
-const email = username + '@xv-camila.example';
+const email = username + '@admin.com';
 const password = randomBytes(30).toString('base64url');
 const prefix = username.toUpperCase();
 const base = 'http://127.0.0.1:8000';
@@ -32,7 +32,7 @@ console.log(JSON.stringify({stage:'CREATE_QA_USER_WITH_HASH',email,userId,prefix
 console.log('Crea solo esta cuenta temporal con el hash y autorízala; después pulsa Enter. Nunca se imprime ni guarda la contraseña.');
 const input = createInterface({input:process.stdin,output:process.stdout});
 await input.question('Continuar: '); input.close();
-const browser = await chromium.launch({channel:'chrome',headless:true});
+const browser = await chromium.launch({channel:'chrome',headless:true,args:['--disable-gpu']});
 const context = await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
 const page = await context.newPage();
 const errors = [], broken = [];
@@ -170,6 +170,16 @@ try {
   assert.equal((await rpc('responder',{p_token:unknown,respuesta:{estado:'no_asiste',asistentes:[]}})).ok,false);
   const publicPass=(await rpc('ver',{p_token:family.token})).data;
   assert.equal(publicPass.folio,undefined); assert.equal(publicPass.token,undefined);
+  const other=all.find(p=>p.folio===createdFolios[0]);
+  const beforeOther=(await rpc('ver',{p_token:other.token})).data;
+  // Los campos extra no pueden cambiar otro pase ni modificar nombre/cupo.
+  assert.ok((await rpc('responder',{p_token:family.token,respuesta:{
+    estado:'asiste',asistentes:['Invitada ficticia','Invitado ficticio'],
+    token:other.token,folio:other.folio,boletos:99,nombre:'Cambio no autorizado'
+  }})).ok);
+  assert.deepEqual((await rpc('ver',{p_token:other.token})).data,beforeOther);
+  const afterAttack=(await rpc('ver',{p_token:family.token})).data;
+  assert.equal(afterAttack.boletos,3); assert.equal(afterAttack.nombre,'Familia de prueba');
   passed('Límite de boletos en servidor, rollback, datos inválidos y aislamiento por token');
   await guest.locator('#openRsvp').click();
   await guest.locator('input[value=declined]').check({force:true});

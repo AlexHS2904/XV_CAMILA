@@ -31,8 +31,21 @@ try {
   await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
   await page.screenshot({path:'test-results/desktop-cover.png',animations:'disabled'});
   await page.goto('http://127.0.0.1:8000/admin.html');
+  // Comprueba el correo definitivo enviado por el formulario sin usar su contraseña real.
+  let loginEmail;
+  await page.route('**/auth/v1/token?grant_type=password',async route=>{
+    loginEmail=route.request().postDataJSON().email;
+    await route.fulfill({status:400,contentType:'application/json',body:JSON.stringify({code:400,error_code:'invalid_credentials',msg:'Invalid login credentials'})});
+  });
+  await page.locator('#username').fill('camila');
+  await page.locator('#password').fill('prueba-de-enrutamiento');
+  await page.locator('#loginForm button').click();
+  await page.waitForFunction(()=>document.querySelector('#loginStatus').dataset.error==='true');
+  assert.equal(loginEmail,'camila@admin.com');
+  assert.equal(await page.locator('#panel').isVisible(),false);
+  await page.reload();
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:'test-results/mobile-login.png'});
   assert.deepEqual(errors,[]);
-  console.log('PASS Música real (reproducir/pausar), carruseles, lightbox, capturas móvil/escritorio y ausencia de errores JS');
+  console.log('PASS Música, carruseles, lightbox, vistas móvil/escritorio y formulario dirigido a camila@admin.com');
 } finally {await browser.close();}

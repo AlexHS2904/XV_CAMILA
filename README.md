@@ -22,7 +22,7 @@ En la primera carga, un nombre sin folio genera una referencia estable. También
 
 El archivo devuelto conserva el orden, las demás hojas y las columnas propias de la lista. La base de datos recibe los datos del pase. **Descargar todos los pases en Excel** recupera la lista completa desde cualquier equipo con acceso al panel e incluye el estado, los nombres confirmados y los datos que cada familia haya compartido.
 
-El acceso del panel pide **Usuario** y **Contraseña**. Por ejemplo, usa **camila** y la contraseña que establezcas al configurar la cuenta. El identificador ficticio de Supabase se utiliza internamente. La contraseña se administra en Supabase y su recuperación se realiza desde ese panel.
+El acceso del panel pide **Usuario** y **Contraseña**. Usa **camila** y la contraseña de la cuenta **camila@admin.com**. El correo se utiliza internamente para Supabase Auth. La contraseña se administra en Supabase y su recuperación se realiza desde ese panel.
 
 ## Proyecto conectado y seguridad
 
@@ -42,9 +42,13 @@ Los enlaces personalizados permiten acceder a esa invitación: compártelos úni
 
 ## Cuenta administrativa genérica
 
-En el dashboard de **este proyecto**, abre Authentication → Users → Add user → Create new user. Crea `camila@xv-camila.example`, establece una contraseña segura y activa **Auto Confirm User**. Es un identificador técnico ficticio, sin correo personal y sin envío de correos. El formulario de acceso pide únicamente **camila** y su contraseña. No uses el registro público para crear esta cuenta: los dominios ficticios se rechazan en ese flujo.
+La cuenta definitiva es **camila@admin.com**. Ya existe en Supabase Auth, está confirmada y fue autorizada mediante `supabase/autorizar_admin.sql`. El formulario conserva **Usuario** y **Contraseña**: escribe **camila** y la contraseña que estableciste en Supabase. El código convierte ese usuario en `camila@admin.com`; la contraseña no se copia a archivos ni a Git.
 
-Después ejecuta `supabase/autorizar_admin.sql` en SQL Editor. El script autoriza exclusivamente esa cuenta ya confirmada y falla si todavía no existe. Para restablecer la contraseña, usa la administración de usuarios de Supabase; el correo ficticio no recibe mensajes de recuperación.
+El script de autorización valida que la cuenta exista y esté confirmada, elimina otras membresías administrativas y autoriza exclusivamente esta cuenta. No crea ni elimina usuarios Auth y no modifica contraseñas. Para restablecer la contraseña, usa la administración de usuarios en Supabase.
+
+**El registro público está deshabilitado en Supabase Auth** (`disable_signup: true`). El proveedor Email permanece habilitado para iniciar sesión con cuentas existentes y los accesos anónimos de Auth están deshabilitados. Se comprobó que `/auth/v1/signup` responde `signup_disabled`. Los invitados usan su token de invitación y no necesitan registrarse ni iniciar sesión.
+
+Para recuperar la cuenta si se elimina: Authentication → Users → Add user → Create new user, correo `camila@admin.com`, contraseña segura y **Auto Confirm User** activado; después ejecuta `supabase/autorizar_admin.sql`. Mantén desactivado **Allow new users to sign up**. Esta opción se administra en el dashboard; no es una variable pública ni un cambio de SQL.
 
 ## Configuración y migraciones
 
@@ -75,10 +79,11 @@ Abre `http://127.0.0.1:8000/admin.html`. Las herramientas de pruebas requieren N
 npm ci
 npm test
 node tests/visual.mjs
+node tests/auth-settings.mjs
 node tests/live.mjs
 ```
 
-`npm test` comprueba recursos, rutas, anclas, configuración y correspondencia de migraciones. `visual.mjs` prueba música, carruseles y lightbox y genera capturas ignoradas por Git en `test-results/`.
+`npm test` comprueba recursos, rutas, anclas, configuración y correspondencia de migraciones. `visual.mjs` prueba música, carruseles, lightbox y el correo que envía el formulario, y genera capturas ignoradas por Git en `test-results/`. `auth-settings.mjs` verifica la configuración de Auth y el rechazo real de registros públicos; no intenta un registro si la opción sigue habilitada.
 
 `live.mjs` es una prueba de integración supervisada contra **XV_CAMILA**. Genera una contraseña temporal exclusivamente en memoria, publica su hash bcrypt y pausa para crear/autorizar una cuenta ficticia por SQL. La infraestructura de QA debe crear la fila de `auth.users` con email confirmado y su identidad `email` de `auth.identities`; no se modifica la cuenta real. En su segunda pausa se revoca la membresía QA para probar el rechazo de cuentas autenticadas sin autorización. Al finalizar se elimina el usuario temporal por su UUID exacto. El script elimina los pases de su prefijo, cierra la sesión y nunca imprime la contraseña ni el JWT. Si se interrumpe, elimina también los registros del prefijo QA indicado al iniciar. No ejecutes estas pruebas con datos reales.
 
@@ -87,6 +92,7 @@ node tests/live.mjs
 | Área | Resultado |
 | --- | --- |
 | Inicio/cierre de sesión y contraseña incorrecta | Correcto con cuenta temporal; JWT rechazado después del cierre confirmado |
+| Registro público | Deshabilitado; endpoint de Auth rechaza con `signup_disabled` |
 | Crear, editar y eliminar individuales/familias | Correcto; eliminar invalida el enlace |
 | Excel: importar, reimportar y exportar | Correcto; enlaces únicos y estables, lote inválido revertido |
 | Invitación personalizada y asistencia | Correcto; acepta asistencia y rechazo con persistencia real |
@@ -95,11 +101,19 @@ node tests/live.mjs
 | Acceso no autorizado | Anónimo y usuario autenticado sin membresía rechazados; metadatos falsificados no conceden acceso |
 | Vista móvil | Chrome con tamaños de 320, 390 y 768 px, sin desbordamiento horizontal de página |
 | Recursos y presentación | 117 archivos visuales idénticos al origen; música, carruseles y lightbox operativos |
-| Limpieza | Cero pases, cuentas QA y sesiones de prueba restantes |
+| Limpieza | Sin pases, cuentas QA ni sesiones de prueba restantes; la cuenta definitiva se conserva |
 
-Cuatro pruebas estáticas correctas, cero errores JavaScript detectados y cero vulnerabilidades en las dependencias de desarrollo conservadas. La prueba móvil usa emulación de Chrome, no dispositivos físicos. Security Advisor no reportó errores ni advertencias; solo los dos avisos informativos por denegación RLS descritos arriba. Performance Advisor no reportó hallazgos.
+Cuatro pruebas estáticas correctas, cero errores JavaScript detectados y cero vulnerabilidades en las dependencias de desarrollo conservadas. La prueba móvil usa emulación de Chrome, no dispositivos físicos. Security Advisor reportó los dos avisos informativos por denegación RLS descritos arriba y una advertencia: la [protección contra contraseñas filtradas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) está desactivada en Auth. Este ajuste adicional queda disponible en el dashboard. Performance Advisor no reportó hallazgos.
 
-**Pendiente operativo:** crear la cuenta definitiva `camila@xv-camila.example` desde Supabase Auth, con su contraseña elegida, y autorizarla mediante `supabase/autorizar_admin.sql`. La integración MCP disponible no ofrece administración de usuarios Auth; las pruebas se hicieron con una cuenta ficticia desechable. La cuenta definitiva y sus credenciales no están incluidas en Git.
+La cuenta definitiva está autorizada y el registro público fue deshabilitado y verificado. El inicio/cierre y las operaciones se probaron con una cuenta temporal independiente; no se solicitó ni cambió la contraseña real. Antes de publicar, prueba también tu acceso **camila** con tu contraseña.
+
+Para tu revisión local, deja el servidor del comando anterior ejecutándose:
+
+- Panel: http://127.0.0.1:8000/admin.html
+- Invitación: http://127.0.0.1:8000/
+- Invitación personalizada: usa **Ver** en el panel; genera `/?invitado=TOKEN` con el token real de ese pase.
+
+Los cambios que hagas en el panel local se guardan en el proyecto real de Supabase. Los enlaces generados localmente apuntan a `127.0.0.1`; para enviarlos a invitados, expórtalos desde la URL pública después de autorizar la publicación.
 
 ## GitHub y publicación
 

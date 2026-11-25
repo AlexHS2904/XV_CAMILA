@@ -93,7 +93,7 @@
         throw new Error('Escribe un usuario de hasta 50 caracteres con letras, números, puntos, guiones o guiones bajos.');
       }
       const {error} = await CamilaPases.client().auth.signInWithPassword({
-        email:username + '@xv-camila.example',
+        email:username + '@admin.com',
         password:id('password').value
       });
       if (error) throw new Error(error.code === 'invalid_credentials' ? 'Revisa tu usuario y contraseña.' : error.message);
