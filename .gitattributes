@@ -1,0 +1,2 @@
+# Las distribuciones minificadas se conservan tal como las entrega su proveedor.
+assets/vendor/** -whitespace linguist-vendored

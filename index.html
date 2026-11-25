@@ -3,6 +3,7 @@
 <html class="scroll-smooth" lang="es">
 <head>
 <meta charset="utf-8"/>
+<meta name="referrer" content="no-referrer"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Mis XV Años — Camila | 20 de Febrero de 2027</title>
 
@@ -14,21 +15,6 @@
 </head>
 <body class="selection:bg-royal-200 selection:text-royal-900">
 <!-- Top Navigation & Floating Controls -->
-<!-- Active Guest Banner (Shows currently selected guest pass) -->
-<div aria-hidden="true" class="bg-royal-700 text-cream-50 text-xs py-2 px-4" hidden="">
-<div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
-<div class="flex items-center gap-2">
-<span class="inline-block w-2 h-2 rounded-full bg-royal-200 animate-pulse"></span>
-<span>Viendo invitación para: <strong class="font-semibold text-white" id="bannerGuestName">Familia García López</strong></span>
-<span class="px-2 py-0.5 rounded-full bg-royal-500/80 text-cream-50 font-semibold" id="bannerTicketBadge">4 boletos asignados</span>
-</div>
-<div class="flex items-center gap-3">
-<a class="underline hover:text-royal-200 transition" href="#boletos-rsvp">Cambiar invitado / código</a>
-<span class="text-royal-300">|</span>
-<a class="font-semibold text-royal-100 hover:text-white transition" href="#boletos-rsvp">Ir a confirmar asistencia →</a>
-</div>
-</div>
-</div>
 <!-- HERO SECTION (Portada con Foto Principal de la Quinceañera y Flores Azules/Blancas) -->
 <section class="relative overflow-hidden pt-6 pb-16 md:py-14 bg-gradient-to-b from-cream-200/80 via-cream-100 to-cream-50 hero-refined" data-invitation="" id="inicio">
 <!-- Top Watercolor Floral Banner -->
@@ -45,6 +31,7 @@
 <p class="font-editorial text-lg sm:text-xl text-royal-800/90 leading-relaxed max-w-xl mx-auto lg:mx-0" id="heroWelcomeQuote">
           «Hay momentos inolvidables que se atesoran en el corazón para siempre; por esa razón quiero que compartas conmigo la ilusión de mis XV años y seas parte de esta noche mágica.»
         </p>
+<p id="heroPass" class="text-sm font-semibold text-royal-700" hidden></p>
 <!-- Date Badge & Save the Date -->
 <div class="date-layout">
 <div class="px-6 py-3 rounded-2xl bg-white/90 border border-royal-200 shadow-sm text-center">
@@ -522,53 +509,37 @@
      alt="Camila abre la falda de tul con las dos manos y mira hacia un lado." decoding="async"/>
 </section>
 <!-- ASIGNACIÓN DE BOLETOS POR INVITADO + CONFIRMACIÓN DE ASISTENCIA (RSVP) -->
-<section class="ticket-summary" data-invitation="" id="boletos-rsvp"><span class="eyebrow layout-attr-1" data-reveal="soft">Un lugar para ti</span><h2 class="font-cursive layout-attr-1" data-reveal="soft">Te esperamos</h2><p data-reveal="soft" id="summaryGuest" class="layout-attr-1"></p><strong data-reveal="soft" id="summaryCount" class="layout-attr-1">4</strong><p data-reveal="soft" class="layout-attr-1">boletos asignados</p><!-- DESHABILITADO POR AHORA: para reactivarlo cambia este <span> por <a class="confirm-button" href="#confirmar-asistencia"> y quita aria-disabled y el style -->
-<span aria-disabled="true" class="confirm-button layout-attr-13" data-reveal="soft">Confirmar asistencia <span aria-hidden="true">↗</span></span></section><section class="py-16 px-4 bg-gradient-to-b from-cream-200/70 to-cream-100 border-t border-royal-200 separate-view" hidden="" id="confirmar-asistencia"><div class="view-back"><a href="#boletos-rsvp">← Volver a la invitación</a></div>
+<section class="ticket-summary" data-invitation="" id="boletos-rsvp">
+<span class="eyebrow">Un lugar para ti</span>
+<h2 class="font-cursive">Te esperamos</h2>
+<p id="summaryGuest" aria-live="polite">Abre el enlace que te compartió Camila para consultar tus boletos.</p>
+<strong id="summaryCount" hidden></strong>
+<p id="summaryLabel" hidden></p>
+<a class="confirm-button" id="openRsvp" href="#confirmar-asistencia" hidden>Confirmar asistencia <span aria-hidden="true">↗</span></a>
+<button type="button" class="confirm-button" id="retryPass" hidden>Volver a intentar</button>
+</section>
+<section class="py-16 px-4 bg-gradient-to-b from-cream-200/70 to-cream-100 border-t border-royal-200 separate-view" hidden="" id="confirmar-asistencia"><div class="view-back"><a href="#boletos-rsvp">← Volver a la invitación</a></div>
 <div class="max-w-5xl mx-auto space-y-10">
 <div class="text-center max-w-2xl mx-auto space-y-2">
 <span class="text-xs uppercase tracking-[0.25em] text-sage-700 font-semibold">Pases Personalizados y Confirmación</span>
 <h2 class="font-cursive text-5xl sm:text-6xl text-royal-600">Confirma tu asistencia</h2>
 <p class="text-sm text-royal-700/90">Consulta tu pase y dinos quiénes podrán acompañarnos.</p>
 </div>
-<!-- Guest Lookup & Quick Demo Selector -->
 <div class="floral-card rounded-3xl p-6 sm:p-8 space-y-6">
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-royal-200/60 pb-6">
-<div class="flex-1 space-y-2">
-<label class="block text-xs uppercase tracking-wider font-semibold text-royal-700" for="guestSearchInput">
-              1. Busca tu nombre, apellido o código de invitación:
-            </label>
-<div class="flex gap-2">
-<input class="flex-1 px-4 py-2.5 rounded-xl border border-royal-300 bg-white text-sm text-royal-900 focus:outline-none focus:ring-2 focus:ring-royal-500" id="guestSearchInput" placeholder="Ej. Familia García, Sofía Hernández, FAM-GARCIA..." type="text"/>
-<button class="px-5 py-2.5 rounded-xl bg-royal-600 hover:bg-royal-700 text-white text-xs uppercase tracking-wider font-semibold transition" id="btnSearchGuest" type="button">
-                Buscar Pase
-              </button>
-</div>
-</div>
-<div class="space-y-1.5">
-<span class="block text-[11px] uppercase tracking-wider text-sage-700 font-semibold">
-              O selecciona un invitado de muestra para probar los boletos:
-            </span>
-<select class="w-full md:w-72 px-3.5 py-2.5 rounded-xl border border-royal-300 bg-white text-xs sm:text-sm font-medium text-royal-800 focus:outline-none focus:ring-2 focus:ring-royal-500" id="guestSelectDropdown">
-<!-- Populated dynamically by JS -->
-</select>
-</div>
-</div>
 <!-- Digital Ticket Stub (Pase de Entrada con Boletos Asignados) -->
 <div class="ticket-stub rounded-2xl border-2 border-dashed border-royal-300 p-6 sm:p-8 bg-cream-50 shadow-sm">
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
 <div class="lg:col-span-8 space-y-3">
 <div class="flex flex-wrap items-center gap-2">
 <span class="px-3 py-0.5 rounded-full bg-royal-600 text-white text-[11px] uppercase tracking-widest font-semibold">Pase Oficial XV Años</span>
-<span class="px-3 py-0.5 rounded-full bg-royal-100 text-royal-700 text-xs font-mono font-semibold" id="ticketCodeBadge">Código: FAM-GARCIA</span>
-<span class="px-3 py-0.5 rounded-full bg-sage-100 text-sage-700 text-xs font-semibold" id="ticketTableBadge">Mesa 4</span>
+
+<span class="px-3 py-0.5 rounded-full bg-sage-100 text-sage-700 text-xs font-semibold" id="ticketTableBadge" hidden></span>
 </div>
 <div>
 <span class="text-xs text-royal-500 block">Invitación personalizada para:</span>
-<h3 class="font-editorial text-3xl sm:text-4xl font-bold text-royal-800" id="ticketGuestTitle">Familia García López</h3>
+<h3 class="font-editorial text-3xl sm:text-4xl font-bold text-royal-800" id="ticketGuestTitle"></h3>
 </div>
-<p class="text-sm text-royal-700" id="ticketAssignedText">
-                Hemos reservado <strong class="text-royal-900 underline">4 boletos</strong> especialmente para ustedes.
-              </p>
+<p class="text-sm text-royal-700" id="ticketAssignedText"></p>
 <!-- Individual Visual Ticket Badges -->
 <div class="flex flex-wrap gap-2 pt-1" id="visualTicketsContainer">
 <!-- Rendered by JS -->
@@ -576,7 +547,7 @@
 </div>
 <div class="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-royal-200 pt-4 lg:pt-0 lg:pl-6 text-center space-y-2">
 <div class="inline-flex flex-col items-center justify-center w-24 h-24 rounded-2xl bg-royal-600 text-white shadow-md mx-auto">
-<span class="font-editorial text-5xl font-bold leading-none" id="ticketCountBig">4</span>
+<span class="font-editorial text-5xl font-bold leading-none" id="ticketCountBig"></span>
 <span class="text-[10px] uppercase tracking-widest mt-1" id="ticketCountLabel">Boletos</span>
 </div>
 <p class="text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 inline-block" id="ticketStatusBadge">
@@ -591,7 +562,7 @@
 <!-- Attendance Radio -->
 <div class="space-y-2">
 <label class="block text-xs uppercase tracking-wider font-semibold text-royal-700">
-                2. ¿Podrán acompañarnos el 20 de Febrero de 2027?
+                ¿Podrán acompañarnos el 20 de Febrero de 2027?
               </label>
 <div class="grid grid-cols-2 gap-3">
 <label class="cursor-pointer">
@@ -611,7 +582,7 @@
 <!-- Number of Tickets to Use (Strictly capped to assigned tickets) -->
 <div class="space-y-2" id="rsvpSeatCountWrapper">
 <label class="block text-xs uppercase tracking-wider font-semibold text-royal-700" for="rsvpSeatsSelect">
-                3. ¿Cuántos de tus <span id="labelMaxTickets">4</span> boletos asignados utilizarán?
+                ¿Cuántos de tus <span id="labelMaxTickets"></span> boletos asignados utilizarán?
               </label>
 <select class="w-full px-4 py-3 rounded-xl border border-royal-300 bg-white text-sm font-medium text-royal-900 focus:outline-none focus:ring-2 focus:ring-royal-500" id="rsvpSeatsSelect">
 <!-- Populated dynamically from 1 to assignedTickets -->
@@ -632,86 +603,29 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 <div>
 <label class="block text-xs uppercase tracking-wider font-semibold text-royal-700 mb-1" for="rsvpPhone">Teléfono / WhatsApp de contacto</label>
-<input class="w-full px-4 py-2.5 rounded-xl border border-royal-300 bg-white text-sm text-royal-900 focus:outline-none focus:ring-2 focus:ring-royal-500" id="rsvpPhone" placeholder="Ej. 222 123 4567" type="tel"/>
+<input class="w-full px-4 py-2.5 rounded-xl border border-royal-300 bg-white text-sm text-royal-900 focus:outline-none focus:ring-2 focus:ring-royal-500" maxlength="40" id="rsvpPhone" placeholder="Ej. 222 123 4567" type="tel"/>
 </div>
 <div>
 <label class="block text-xs uppercase tracking-wider font-semibold text-royal-700 mb-1" for="rsvpSong">Canción que no puede faltar en la fiesta </label>
-<input class="w-full px-4 py-2.5 rounded-xl border border-royal-300 bg-white text-sm text-royal-900 focus:outline-none focus:ring-2 focus:ring-royal-500" id="rsvpSong" placeholder="Ej. Tiempo de Vals / Tu canción favorita" type="text"/>
+<input class="w-full px-4 py-2.5 rounded-xl border border-royal-300 bg-white text-sm text-royal-900 focus:outline-none focus:ring-2 focus:ring-royal-500" maxlength="200" id="rsvpSong" placeholder="Ej. Tiempo de Vals / Tu canción favorita" type="text"/>
 </div>
 </div>
 <div>
 <label class="block text-xs uppercase tracking-wider font-semibold text-royal-700 mb-1" for="rsvpMessage">Mensaje o felicitación para Camila (y restricciones alimenticias si aplica)</label>
-<textarea class="w-full px-4 py-2.5 rounded-xl border border-royal-300 bg-white text-sm text-royal-900 focus:outline-none focus:ring-2 focus:ring-royal-500" id="rsvpMessage" placeholder="Escribe tus buenos deseos para Camila..." rows="2"></textarea>
+<textarea class="w-full px-4 py-2.5 rounded-xl border border-royal-300 bg-white text-sm text-royal-900 focus:outline-none focus:ring-2 focus:ring-royal-500" maxlength="1000" id="rsvpMessage" placeholder="Escribe tus buenos deseos para Camila..." rows="2"></textarea>
 </div>
 <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
 <p class="text-xs text-royal-600">
               Favor de confirmar antes del <strong>20 de Enero de 2027</strong>.
             </p>
-<!-- DESHABILITADO POR AHORA: para reactivarlo quita "disabled" y "aria-disabled", y borra el style y regresa las clases hover:bg-royal-700 transition shadow-lg -->
-<button aria-disabled="true" class="px-8 py-3.5 rounded-full bg-royal-600 text-white text-xs sm:text-sm uppercase tracking-widest font-semibold layout-attr-14" disabled="" type="submit">
-              Confirmar Asistencia Ahora
+
+<button id="saveRsvp" class="px-8 py-3.5 rounded-full bg-royal-600 text-white text-xs sm:text-sm uppercase tracking-widest font-semibold" type="submit">
+              Guardar mi respuesta
             </button>
 </div>
 </form>
 </div>
-<!-- HOST TICKET ASSIGNMENT & RSVP SUMMARY PANEL -->
-<p class="local-note">Esta versión guarda las respuestas en este navegador.</p> <a class="manage-link" href="#administrar-boletos">Administrar boletos · demostración</a></div>
-</section><section class="separate-view admin-view" hidden="" id="administrar-boletos"><div class="view-back"><a href="#confirmar-asistencia">← Volver a confirmación</a></div><p class="local-note">Panel de demostración · los cambios se guardan en este navegador.</p><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sage-100 hover:bg-sage-300/50 text-sage-700 border border-sage-300 text-xs font-medium transition" id="btnOpenAdminModal" title="Personalizar datos del evento y gestionar boletos" type="button">
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-<span>Personalizar / Boletos</span>
-</button><div class="floral-card rounded-3xl p-6 sm:p-8 space-y-5 border-2 border-sage-300/70">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-<div>
-<span class="px-2.5 py-0.5 rounded-full bg-sage-100 text-sage-700 text-[10px] uppercase tracking-widest font-semibold">Panel del Organizador</span>
-<h3 class="font-editorial text-2xl sm:text-3xl font-bold text-royal-800 mt-1">Control de Boletos Asignados por Persona / Familia</h3>
-<p class="text-xs text-royal-600">Aquí puedes asignar cuántos boletos tiene cada invitado, agregar nuevas familias o probar cómo verá su pase cada persona.</p>
-</div>
-<div class="flex flex-wrap gap-2">
-<button class="px-4 py-2 rounded-full bg-royal-600 hover:bg-royal-700 text-white text-xs font-medium transition" id="btnAddGuestRow" type="button">
-              + Agregar invitado / asignar boletos
-            </button>
-<button class="px-4 py-2 rounded-full bg-white hover:bg-royal-50 text-royal-700 border border-royal-300 text-xs font-medium transition" id="btnExportCsv" type="button">
-              Descargar lista CSV
-            </button>
-</div>
-</div>
-<!-- Summary Metrics -->
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-<div class="bg-white/90 rounded-2xl p-3 border border-royal-200">
-<span class="font-editorial text-2xl font-bold text-royal-700 block" id="statTotalPasses">5</span>
-<span class="text-[11px] text-royal-500">Familias / Pases</span>
-</div>
-<div class="bg-white/90 rounded-2xl p-3 border border-royal-200">
-<span class="font-editorial text-2xl font-bold text-royal-700 block" id="statTotalTickets">15</span>
-<span class="text-[11px] text-royal-500">Boletos Asignados</span>
-</div>
-<div class="bg-emerald-50/90 rounded-2xl p-3 border border-emerald-200">
-<span class="font-editorial text-2xl font-bold text-emerald-700 block" id="statConfirmedTickets">0</span>
-<span class="text-[11px] text-emerald-700">Boletos Confirmados</span>
-</div>
-<div class="bg-amber-50/90 rounded-2xl p-3 border border-amber-200">
-<span class="font-editorial text-2xl font-bold text-amber-700 block" id="statPendingTickets">15</span>
-<span class="text-[11px] text-amber-700">Boletos por Confirmar</span>
-</div>
-</div>
-<!-- Guest & Ticket Table -->
-<div class="overflow-x-auto rounded-2xl border border-royal-200 bg-white">
-<table class="w-full text-left border-collapse text-xs sm:text-sm">
-<thead>
-<tr class="bg-royal-50 text-royal-800 border-b border-royal-200 text-[11px] uppercase tracking-wider">
-<th class="py-3 px-4">Código</th>
-<th class="py-3 px-4">Invitado / Familia</th>
-<th class="py-3 px-4 text-center">Boletos Asignados</th>
-<th class="py-3 px-4 text-center">Mesa</th>
-<th class="py-3 px-4 text-center">Estado RSVP</th>
-<th class="py-3 px-4 text-right">Acciones</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-royal-100" id="guestAdminTableBody">
-<!-- Populated dynamically by JS -->
-</tbody>
-</table>
-</div>
+<p id="rsvpFeedback" role="status" class="local-note"></p>
 </div></section>
 <!-- FOOTER -->
 <footer class="py-12 px-4 bg-royal-900 text-cream-100 text-center space-y-4 layout-attr-1" data-invitation="" data-reveal="soft">
@@ -736,7 +650,7 @@
 <div class="flex items-center justify-between border-b border-royal-200 pb-3">
 <div>
 <span class="text-[10px] uppercase tracking-widest text-sage-700 font-semibold">Configuración de la Invitación</span>
-<h3 class="font-editorial text-2xl sm:text-3xl font-bold text-royal-800">Personalizar Datos y Agregar Invitados</h3>
+<h3 class="font-editorial text-2xl sm:text-3xl font-bold text-royal-800">Vista previa del evento</h3>
 </div>
 <button class="p-1.5 rounded-full hover:bg-royal-100 text-royal-700" id="btnCloseAdminModal" type="button">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -789,37 +703,17 @@
           </button>
 </div>
 </form>
-<!-- Add New Guest & Ticket Assignment Form -->
-<form class="space-y-4 border-t border-royal-200 pt-5" id="addGuestForm">
-<h4 class="text-xs uppercase tracking-wider font-semibold text-sage-700">Asignar Boletos a Nuevo Invitado o Familia</h4>
-<div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
-<div class="sm:col-span-2">
-<label class="block font-medium text-royal-700 mb-1">Nombre de Familia o Invitado</label>
-<input class="w-full px-3 py-2 rounded-xl border border-royal-300 bg-white" id="newGuestName" placeholder="Ej. Familia Morales Pérez" required="" type="text"/>
-</div>
-<div>
-<label class="block font-medium text-royal-700 mb-1">Boletos Asignados</label>
-<input class="w-full px-3 py-2 rounded-xl border border-royal-300 bg-white" id="newGuestTickets" max="15" min="1" required="" type="number" value="3"/>
-</div>
-<div>
-<label class="block font-medium text-royal-700 mb-1">Mesa</label>
-<input class="w-full px-3 py-2 rounded-xl border border-royal-300 bg-white" id="newGuestTable" type="text" value="Mesa 6"/>
-</div>
-</div>
-<div class="flex justify-end gap-2">
-<button class="px-5 py-2 rounded-full bg-sage-500 hover:bg-sage-700 text-white text-xs font-semibold transition" type="submit">
-            + Agregar Invitado con sus Boletos
-          </button>
-</div>
-</form>
-</div>
-</div>
+</div></div>
 <!-- TOAST NOTIFICATION -->
 <div class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-royal-800 text-white px-4 py-3 rounded-2xl shadow-xl border border-royal-400 text-xs flex items-center gap-2.5" id="toastNotification">
 <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
 <span id="toastMessage">Acción completada</span>
 </div>
-<script src="assets/js/app.js?v=3" defer></script>
+<script src="assets/js/config.js" defer></script>
+<script src="assets/vendor/supabase-2.119.0.js" defer></script>
+<script src="assets/js/pases-api.js" defer></script>
+<script src="assets/js/app.js?v=4" defer></script>
+<script src="assets/js/invitado.js" defer></script>
 <script src="assets/js/gallery.js?v=3" defer></script>
 <script src="assets/js/animations.js?v=2" defer></script></body>
 </html>

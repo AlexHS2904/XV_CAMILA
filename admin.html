@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+  <title>Invitados · Mis XV de Camila</title>
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <script defer src="assets/js/config.js"></script>
+  <script defer src="assets/vendor/supabase-2.119.0.js"></script>
+  <script defer src="assets/vendor/jszip-3.10.1.min.js"></script>
+  <script defer src="assets/js/pases-api.js"></script>
+  <script defer src="assets/js/excel-invitados.js"></script>
+  <script defer src="assets/js/admin.js"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="brand"><img src="assets/images/camila-emblema.webp" width="66" height="66" alt=""><div><a href="./">Mis XV de Camila</a><h1>Invitados</h1></div></div>
+      <button class="secondary" id="logout" type="button" hidden>Cerrar sesión</button>
+    </header>
+    <div id="loginBox" class="card login">
+      <h2>Acceso de Camila</h2>
+      <form id="loginForm">
+        <label>Usuario<input id="username" type="text" required autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="50" placeholder="camila"></label>
+        <label>Contraseña<input id="password" type="password" required autocomplete="current-password"></label>
+        <button type="submit">Entrar al panel</button>
+      </form>
+      <p class="feedback" id="loginStatus" role="status"></p>
+      <a href="assets/excel/Plantilla_invitados.xlsx" download>Descargar plantilla de Excel</a>
+    </div>
+    <div id="panel" hidden>
+      <section class="card" aria-labelledby="importTitle">
+        <div class="heading"><h2 id="importTitle">Importar desde Excel</h2><a href="assets/excel/Plantilla_invitados.xlsx" download>Descargar plantilla</a></div>
+        <p>Escribe una familia por fila con su nombre y sus boletos. Puedes agregar la mesa y conservar tus propias columnas.</p>
+        <label class="file" for="archivo">Seleccionar archivo .xlsx<input id="archivo" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
+        <p id="fileStatus" class="feedback" role="status"></p>
+        <div id="preview" hidden>
+          <h3>Revisar lista</h3>
+          <p id="previewSummary"></p>
+          <div class="table-wrap"><table><thead><tr><th>Fila</th><th>Familia o invitado</th><th>Boletos</th><th>Acción</th></tr></thead><tbody id="sample"></tbody></table></div>
+          <p id="partial" class="hint"></p>
+          <button id="confirmImport" type="button">Guardar y descargar Excel con enlaces</button>
+        </div>
+        <a class="button secondary" id="lastDownload" hidden download>Volver a descargar este Excel</a>
+        <p class="hint">Para corregir un nombre, edita el archivo de regreso y conserva su folio. Si dos familias se llaman igual, asígnales folios distintos, por ejemplo F-01 y F-02.</p>
+      </section>
+      <section class="card" aria-labelledby="savedTitle">
+        <div class="heading"><h2 id="savedTitle">Pases guardados</h2><button id="refresh" class="secondary" type="button">Actualizar</button></div>
+        <p id="totals" class="totals"></p>
+        <div class="actions"><button id="downloadAll" class="secondary" type="button">Descargar todos los pases en Excel</button><button id="newPass" class="secondary" type="button">Agregar un pase</button></div>
+        <form id="onePass" hidden>
+          <h3 id="editTitle">Agregar un pase</h3>
+          <div class="fields">
+            <label>Familia o invitado<input id="oneName" maxlength="160" required></label>
+            <label>Boletos<input id="oneCount" type="number" inputmode="numeric" min="1" max="15" value="1" required></label>
+            <label>Mesa (opcional)<input id="oneTable" maxlength="80"></label>
+            <label>Folio (opcional)<input id="oneFolio" maxlength="50"></label>
+          </div>
+          <div class="actions"><button type="submit">Guardar pase</button><button id="cancelEdit" class="secondary" type="button">Cancelar</button></div>
+        </form>
+        <p id="tableStatus" class="feedback" role="status"></p>
+        <div class="table-wrap"><table><thead><tr><th>Familia o invitado</th><th>Boletos</th><th>Mesa</th><th>Asistencia</th><th>Enlace</th></tr></thead><tbody id="saved"></tbody></table></div>
+      </section>
+      <footer><a href="./">Ver invitación</a><a href="./?vista=ajustes">Vista previa de los datos del evento</a></footer>
+    </div>
+  </main>
+</body>
+</html>
