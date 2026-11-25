@@ -15,7 +15,7 @@ try {
   Object.defineProperty(window,'CamilaPases',{get:()=>api,set:()=>{}});
  });
  await page.goto('http://127.0.0.1:8000/admin.html');await page.locator('#panel').waitFor({state:'visible'});
- for(const width of [1440,390]){await page.setViewportSize({width,height:1000});const a=await page.locator('#oneCount').boundingBox(),b=await page.locator('#oneTable').boundingBox();assert.ok(Math.abs(a.y-b.y)<2);}
+ for(const width of [1440,390]){await page.setViewportSize({width,height:1000});const a=await page.locator('#oneCount').boundingBox(),b=await page.locator('#oneTable').boundingBox();assert.ok(width>700?Math.abs(a.y-b.y)<2:b.y>a.y);}
  await page.setViewportSize({width:1440,height:1000});
  await page.evaluate(()=>qa.hold=true);await page.locator('#refresh').click();await page.waitForFunction(()=>Boolean(qa.release));
  await page.locator('#oneName').fill('Nueva durante consulta');await page.locator('#onePass button').click();await page.waitForFunction(()=>qa.rows.length===2);await page.evaluate(()=>qa.release());

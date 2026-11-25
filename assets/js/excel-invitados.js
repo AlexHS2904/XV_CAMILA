@@ -246,7 +246,7 @@
     let dxfs=first(root,'dxfs');if(!dxfs){dxfs=newEl(root,'dxfs');appendOrdered(root,dxfs,['tableStyles','colors','extLst']);}
     ids.states=[];
     for(const [fg,bg]of [['376858','EAF3ED'],['476C8A','EAF1F7'],['8B713F','F8F1E2'],['915B59','F8EEEC']]) {
-      const i=dxfs.children.length,node=newEl(dxfs,'dxf');const frag=parse('<dxf xmlns="'+root.namespaceURI+'"><font><color rgb="FF'+fg+'"/></font><fill><patternFill patternType="solid"><fgColor rgb="FF'+bg+'"/><bgColor indexed="64"/></patternFill></fill></dxf>');for(const child of [...frag.documentElement.children])node.append(styles.importNode(child,true));dxfs.append(node);ids.states.push(i);
+      const i=dxfs.children.length,node=newEl(dxfs,'dxf');const frag=parse('<dxf xmlns="'+root.namespaceURI+'"><font><color rgb="FF'+fg+'"/></font><fill><patternFill patternType="solid"><fgColor rgb="FF'+bg+'"/><bgColor rgb="FF'+bg+'"/></patternFill></fill></dxf>');for(const child of [...frag.documentElement.children])node.append(styles.importNode(child,true));dxfs.append(node);ids.states.push(i);
     }
     dxfs.setAttribute('count',dxfs.children.length);
     book.zip.file(path,xml(styles));
@@ -303,6 +303,6 @@
     return book.zip.generateAsync({type:'blob',compression:'DEFLATE',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
   }
   async function exportList(imported,passes){return finish(imported.book,imported.entries,passes);}
-  async function exportAll(passes){const response=await fetch('assets/excel/Plantilla_invitados.xlsx');if(!response.ok)throw new Error('No se pudo cargar la plantilla.');const book=await openBook(await response.arrayBuffer());return finish(book,passes.map((p,i)=>({fila:i+2,folio:p.folio})),passes);}
+  async function exportAll(passes){const response=await fetch('assets/excel/Plantilla_invitados.xlsx?v=82b6b7dbeb29');if(!response.ok)throw new Error('No se pudo cargar la plantilla.');const book=await openBook(await response.arrayBuffer());return finish(book,passes.map((p,i)=>({fila:i+2,folio:p.folio})),passes);}
   window.CamilaExcel={readList,checkRow,exportList,exportAll};
 })();

@@ -101,7 +101,7 @@ No vuelvas a instalarlas en este proyecto: ambas están registradas. Para un ent
 No hace falta compilar el sitio. Para probarlo localmente:
 
 ```bash
-python3 -m http.server 8000 --bind 127.0.0.1
+npm run preview
 ```
 
 Abre `http://127.0.0.1:8000/admin.html`. Las herramientas de pruebas requieren Node 22 y Chrome instalado:
@@ -111,12 +111,15 @@ npm ci
 npm test
 node tests/excel-browser.mjs
 node tests/admin-browser.mjs
+node tests/admin-visual.mjs
+node tests/confirmation-visual.mjs
+node tests/cache-browser.mjs
 node tests/visual.mjs
 node tests/auth-settings.mjs
 node tests/live.mjs
 ```
 
-`npm test` ejecuta diez pruebas sobre recursos, rutas, anclas, configuración, migración base, estadísticas, identidades de importación y URL pública. `excel-browser.mjs` comprueba el ciclo exportar/reimportar, familias con nombres iguales, IDs ocultos, enlaces, fechas, estilos y rangos del archivo OOXML, sin crear datos en Supabase. `admin-browser.mjs` simula consultas simultáneas y fallos de actualización después de guardar, y verifica la alineación móvil del formulario. `visual.mjs` prueba música, carruseles, lightbox y el correo que envía el formulario, y genera capturas ignoradas por Git en `test-results/`. `auth-settings.mjs` verifica la configuración de Auth y el rechazo real de registros públicos; no intenta un registro si la opción sigue habilitada.
+`npm test` ejecuta once pruebas sobre recursos, rutas, anclas, configuración, migración base, estadísticas, identidades de importación y URL pública. `excel-browser.mjs` comprueba el ciclo exportar/reimportar, familias con nombres iguales, IDs ocultos, enlaces, fechas, estilos y rangos del archivo OOXML, sin crear datos en Supabase. `admin-browser.mjs` simula consultas simultáneas y fallos de actualización después de guardar, y verifica la alineación móvil del formulario. `visual.mjs` prueba música, carruseles, lightbox y el correo que envía el formulario, y genera capturas ignoradas por Git en `test-results/`. `auth-settings.mjs` verifica la configuración de Auth y el rechazo real de registros públicos; no intenta un registro si la opción sigue habilitada.
 
 `live.mjs` es una prueba de integración supervisada contra **XV_CAMILA**. Genera una contraseña temporal exclusivamente en memoria, publica su hash bcrypt y pausa para crear/autorizar una cuenta ficticia por SQL. La infraestructura de QA debe crear la fila de `auth.users` con email confirmado y su identidad `email` de `auth.identities`; no se modifica la cuenta real. En su segunda pausa se revoca la membresía QA para probar el rechazo de cuentas autenticadas sin autorización. Al finalizar se elimina el usuario temporal por su UUID exacto. El script elimina los pases de su prefijo, cierra la sesión y nunca imprime la contraseña ni el JWT. Si se interrumpe, elimina también los registros del prefijo QA indicado al iniciar. No ejecutes estas pruebas con datos reales.
 
@@ -137,7 +140,7 @@ node tests/live.mjs
 | Recursos y presentación | 115 recursos públicos originales idénticos; cambios aislados al panel y a la pantalla de confirmación, música/carruseles/lightbox operativos |
 | Limpieza | Sin pases, cuentas QA ni sesiones de prueba restantes; la cuenta definitiva se conserva |
 
-Diez pruebas unitarias/estáticas correctas, pruebas funcionales de Chrome y Supabase satisfactorias y revisión independiente del Excel generado mediante openpyxl. No se agregaron dependencias de producción. La prueba móvil usa emulación de Chrome, no dispositivos físicos. Security Advisor reportó los dos avisos informativos por denegación RLS descritos arriba y una advertencia: la [protección contra contraseñas filtradas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) está desactivada en Auth. Este ajuste adicional queda disponible en el dashboard. Performance Advisor no reportó hallazgos.
+Once pruebas unitarias/estáticas correctas, pruebas funcionales de Chrome y Supabase satisfactorias y revisión independiente del Excel generado mediante openpyxl. No se agregaron dependencias de producción. La prueba móvil usa emulación de Chrome, no dispositivos físicos. Security Advisor reportó los dos avisos informativos por denegación RLS descritos arriba y una advertencia: la [protección contra contraseñas filtradas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) está desactivada en Auth. Este ajuste adicional queda disponible en el dashboard. Performance Advisor no reportó hallazgos.
 
 La cuenta definitiva está autorizada y el registro público fue deshabilitado y verificado. El inicio/cierre y las operaciones se probaron con una cuenta temporal independiente; no se solicitó ni cambió la contraseña real. El organizador ya validó personalmente su acceso y el flujo anterior; esta mejora queda disponible para revisión local antes de publicar.
 
@@ -148,6 +151,26 @@ Para tu revisión local, deja el servidor del comando anterior ejecutándose:
 - Invitación personalizada: usa **Abrir** en el panel; genera `/?invitado=TOKEN` con el token real de ese pase.
 
 Los cambios que hagas en el panel local se guardan en el proyecto real de Supabase. Los enlaces generados localmente apuntan a `127.0.0.1`; para enviarlos a invitados, expórtalos desde la URL pública después de autorizar la publicación.
+
+## Revisión visual del panel y prevención de caché obsoleta
+
+El panel usa tipografía sans-serif del sistema, encabezado compacto y formulario horizontal en escritorio. Las cuatro tarjetas principales muestran boletos asignados, confirmados, pendientes y no utilizados. La dona SVG muestra el porcentaje de confirmación; el bloque de familias incluye una barra del porcentaje de respuesta. Se conservaron las fórmulas, la actualización cada 30 segundos y toda la lógica de persistencia y seguridad.
+
+**Diagnóstico previo al rediseño:** el servidor de `127.0.0.1:8000` estaba en este repositorio y servía HTML/CSS idénticos a `52b9050`, con `200 text/css`, sin errores de CSS, CSP ni MIME. Al combinar deliberadamente su HTML/JS con el CSS de `6c6a9da` se reprodujeron todos los síntomas: tarjetas ausentes, números juntos, input duplicado y dona de 864 × 24 px. La hoja nueva sí daba una dona de 176 × 176 px. La URL del CSS no había cambiado entre versiones. La caché anterior en la sesión personal del organizador es la explicación respaldada por esta reproducción; no se inspeccionó directamente esa sesión.
+
+Para impedir la mezcla, CSS, JavaScript y plantilla del panel utilizan URLs con hash de contenido. Tras editar esos recursos, ejecuta **`npm run version:assets`** antes de `npm test`; la prueba de hashes detecta referencias desactualizadas. La confirmación también versiona su CSS y JavaScript. El servidor de `npm run preview` fija la raíz en el repositorio, escucha únicamente en `127.0.0.1` y envía `Cache-Control: no-store`, incluso si se ejecuta desde otro directorio. La prueba `cache-browser.mjs` conserva realmente la hoja antigua en la caché de Chrome y comprueba que la nueva URL carga los estilos correctos.
+
+Se generaron y revisaron capturas reales en **1440 × 900**, **1280 × 800**, **390 × 844** y **320 × 844**, con panel vacío y con familias confirmadas, parciales, pendientes y rechazadas. Se comprobaron las tarjetas blancas, separación de números, dona circular (también con 0%), colores de filtros, selector personalizado, input de archivo oculto, alineación y ausencia de desbordamiento. Las capturas de confirmación incluyen éxito, rechazo y edición precargada en los cuatro tamaños.
+
+- `test-results/admin-review/`: capturas del panel, viewport y página completa; `report.json` incluye estilos computados y hash del CSS recibido.
+- `test-results/confirmation-review/`: capturas y comprobaciones de confirmación/edición.
+- `test-results/css-diagnosis.json` y `diagnosis-old-css.png`: evidencia de la reproducción inicial.
+- `tests/admin-browser.mjs`: creación, edición, eliminación y manejo de consultas simultáneas/fallos de red.
+- `tests/excel-browser.mjs`: archivo real generado, identidad oculta, reimportación, columnas adicionales, fechas Mac y estilos.
+
+La exportación real también se abrió en Microsoft Excel y se revisó su PDF. Se encontró y corrigió un fondo negro en los estados de asistencia: los estilos diferenciales usaban un color de fondo automático; ahora usan RGB explícito. Se inspeccionaron encabezados, filas alternadas, enlaces, ID oculto, fechas y estados. Evidencia local: `test-results/excel-validado-microsoft.pdf` y `excel-validado-detalle.png`.
+
+Los escenarios visuales y de fallos usan datos ficticios y respuestas simuladas **solo en memoria del navegador**, sin crear usuarios o registros en Supabase. La validación anterior contra Supabase permanece documentada arriba; esta revisión no modifica tablas, funciones, políticas ni credenciales. Los PNG y XLSX de prueba están ignorados por Git y se pueden regenerar con los scripts de pruebas.
 
 ## GitHub y publicación
 

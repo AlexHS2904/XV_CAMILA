@@ -29,13 +29,23 @@
   function badge(p){const state=model.state(p);return el('span',model.labels[state],'badge '+state);}
   function metrics() {
     const s=model.stats([...passes.values()]);
-    const definitions=[['Invitaciones generadas',s.invitaciones],['Boletos asignados',s.asignados],['Boletos confirmados',s.confirmados],['Boletos pendientes de respuesta',s.pendientes],['Boletos no utilizados',s.noUtilizados],['Familias que han respondido',s.respondidas],['Familias pendientes',s.familiasPendientes],['Familias que no asistirán',s.noAsisten],['Confirmación · boletos confirmados / asignados',s.confirmacion.toFixed(1)+' %'],['Respuesta · invitaciones respondidas / total',s.respuesta.toFixed(1)+' %']];
-    id('metrics').replaceChildren(...definitions.map(([label,value],i)=>{const node=el('div',undefined,'metric'+(i===2?' featured':'')+(i>=8?' wide':''));node.append(el('span',label),el('strong',value));return node;}));
-    const confirmed=s.asignados?s.confirmados/s.asignados*100:0,pending=s.asignados?s.pendientes/s.asignados*100:0;
-    id('ticketChart').style.background=s.asignados?`conic-gradient(#537c70 0 ${confirmed}%, #c4a66d ${confirmed}% ${confirmed+pending}%, #b7c3cf ${confirmed+pending}% 100%)`:'#e1e6eb';
+    const icons={asignados:'M4 5h16v5a2 2 0 0 0 0 4v5H4v-5a2 2 0 0 0 0-4V5zm10 0v14',confirmados:'m6 12 4 4 8-8',pendientes:'M12 7v5l3 2 M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',noUtilizados:'m8 8 8 8m0-8-8 8 M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0'};
+    const definitions=[['Boletos asignados','asignados'],['Boletos confirmados','confirmados'],['Boletos pendientes','pendientes'],['Boletos no utilizados','noUtilizados']];
+    id('metrics').replaceChildren(...definitions.map(([label,key])=>{
+      const node=el('div',undefined,'metric '+key);node.dataset.metric=key;
+      const top=el('div',undefined,'metric-heading'),icon=document.createElementNS('http://www.w3.org/2000/svg','svg'),path=document.createElementNS(icon.namespaceURI,'path');
+      for(const [attr,value]of Object.entries({viewBox:'0 0 24 24',width:20,height:20,fill:'none',stroke:'currentColor','stroke-width':1.7,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true'}))icon.setAttribute(attr,value);
+      path.setAttribute('d',icons[key]);icon.append(path);top.append(el('span',label),icon);node.append(top,el('strong',s[key]));return node;
+    }));
+    const distribution=[['Confirmados',s.confirmados,'#3e866d'],['Pendientes',s.pendientes,'#d6a13b'],['No utilizados',s.noUtilizados,'#cb7b7b']];
+    let offset=0;id('chartSegments').replaceChildren();
+    for(const [,n,color]of distribution){if(!n||!s.asignados)continue;const circle=document.createElementNS('http://www.w3.org/2000/svg','circle'),percent=n/s.asignados*100;for(const [attr,value]of Object.entries({cx:60,cy:60,r:48,fill:'none',stroke:color,'stroke-width':14,pathLength:100,'stroke-dasharray':`${percent} ${100-percent}`,'stroke-dashoffset':-offset}))circle.setAttribute(attr,value);offset+=percent;id('chartSegments').append(circle);}
     id('ticketChart').setAttribute('aria-label',`${s.confirmados} boletos confirmados, ${s.pendientes} pendientes y ${s.noUtilizados} no utilizados. Total ${s.asignados}.`);
-    id('chartTotal').textContent=s.asignados;id('invitationCount').textContent=s.invitaciones;
-    id('chartLegend').replaceChildren(...[['Confirmados',s.confirmados,'#537c70'],['Pendientes',s.pendientes,'#c4a66d'],['No utilizados',s.noUtilizados,'#b7c3cf']].map(([label,n,color])=>{const row=el('div'),dot=el('i',undefined,'dot');dot.style.background=color;row.append(dot,el('span',label),el('strong',n));return row;}));
+    id('chartTotal').textContent=Number(s.confirmacion.toFixed(1))+'%';id('invitationCount').textContent=s.invitaciones;
+    id('chartLegend').replaceChildren(...distribution.map(([label,n,color])=>{const row=el('div'),dot=el('i',undefined,'dot');dot.style.background=color;row.append(dot,el('span',label),el('strong',n));return row;}));
+    id('familyMetrics').replaceChildren(...[['Generadas','invitaciones'],['Respondidas','respondidas'],['Pendientes','familiasPendientes'],['No asistirán','noAsisten']].map(([label,key])=>{const node=el('div');node.dataset.metric=key;node.append(el('strong',s[key]),el('span',label));return node;}));
+    id('responsePercent').textContent=Number(s.respuesta.toFixed(1))+'%';id('responseProgress').setAttribute('aria-valuenow',s.respuesta.toFixed(1));id('responseProgress').firstElementChild.style.width=s.respuesta+'%';
+    id('responseSummary').textContent=s.invitaciones?`${s.respondidas} de ${s.invitaciones} invitaciones respondidas.`:'Sin invitaciones registradas.';
     id('downloadAll').disabled=!passes.size || busy;
   }
   function details(p) {
@@ -68,7 +78,7 @@
       const card=el('article',undefined,'guest-card'),top=el('div',undefined,'card-top');top.append(el('h3',p.nombre),badge(p));const stats=el('div',undefined,'card-stats');for(const [label,value] of [['Confirmados / asignados',p.confirmados+' / '+p.boletos],['Mesa',p.mesa||'Sin asignar']]){const block=el('div');block.append(el('span',label),el('strong',value));stats.append(block);}card.append(top,stats,el('div',date(p.confirmado_en),'date-cell'),actions(p));id('guestCards').append(card);
     }
     id('emptyState').hidden=Boolean(selected.length);id('guestTable').hidden=!selected.length;id('pagination').hidden=!selected.length;
-    id('emptyTitle').textContent=passes.size?'No encontramos coincidencias':'Tu lista comienza aquí';
+    id('emptyTitle').textContent=passes.size?'No encontramos coincidencias':'Sin invitaciones';
     id('emptyText').textContent=passes.size?'Prueba otro nombre o cambia el filtro de asistencia.':'Agrega tu primera familia arriba o importa tu lista de Excel.';
     id('emptyAction').textContent=passes.size?'Limpiar búsqueda y filtros':'Agregar una invitación';
     id('pageInfo').textContent=`${selected.length ? (page-1)*pageSize+1:0}–${Math.min(page*pageSize,selected.length)} de ${selected.length} invitaciones · Página ${page} de ${pages}`;
@@ -113,6 +123,7 @@
     id('previewSummary').textContent=`${plan.length} invitaciones · ${counts.Nueva} nuevas · ${counts.Actualizar} por actualizar · ${counts['Sin cambios']} sin cambios · ${counts.Conflicto} con conflictos`;
     id('confirmImport').disabled=Boolean(counts.Conflicto)||busy;id('preview').hidden=false;return plan;
   }
+  id('chooseFile').addEventListener('click',()=>id('archivo').click());
   id('archivo').addEventListener('change',async e=>{
     const version=++fileVersion,file=e.target.files[0];imported=null;choices={};id('preview').hidden=true;id('lastDownload').hidden=true;notice('fileStatus');id('fileName').textContent=file?.name||'Ningún archivo seleccionado';if(!file)return;
     try{if(!/\.xlsx$/i.test(file.name))throw new Error('Selecciona un archivo .xlsx.');if(file.size>15*1024*1024)throw new Error('El archivo supera 15 MB.');notice('fileStatus','Leyendo tu lista…');await refresh();const result=await CamilaExcel.readList(await file.arrayBuffer());if(version!==fileVersion)return;imported={...result,filename:file.name.replace(/\.xlsx$/i,'')};renderPreview();notice('fileStatus','Hoja: '+result.book.sheetName+'. Revisa los cambios antes de guardar.');}catch(err){if(version===fileVersion)notice('fileStatus',err.message,true);}

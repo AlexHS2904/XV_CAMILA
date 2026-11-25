@@ -65,8 +65,10 @@ async function assertDashboard(){
  await page.locator('#refresh').click();await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
  const all=await current();const assigned=all.reduce((s,p)=>s+p.boletos,0),confirmed=all.reduce((s,p)=>s+p.confirmados,0),pending=all.filter(p=>p.estado==='pendiente').reduce((s,p)=>s+p.boletos,0),unused=all.filter(p=>p.estado!=='pendiente').reduce((s,p)=>s+p.boletos-p.confirmados,0),responded=all.filter(p=>p.estado!=='pendiente').length;
  assert.equal(assigned,confirmed+pending+unused);
- const expected=[all.length,assigned,confirmed,pending,unused,responded,all.length-responded,all.filter(p=>p.estado==='no_asiste').length,(assigned?confirmed/assigned*100:0).toFixed(1)+' %',(all.length?responded/all.length*100:0).toFixed(1)+' %'].map(String);
- assert.deepEqual(await page.locator('#metrics .metric strong').allTextContents(),expected);
+ const expected={invitaciones:all.length,asignados:assigned,confirmados:confirmed,pendientes:pending,noUtilizados:unused,respondidas:responded,familiasPendientes:all.length-responded,noAsisten:all.filter(p=>p.estado==='no_asiste').length};
+ for(const [key,value]of Object.entries(expected))assert.equal(await page.locator('[data-metric='+key+'] strong').textContent(),String(value));
+ assert.equal(await page.locator('#chartTotal').textContent(),Number((assigned?confirmed/assigned*100:0).toFixed(1))+'%');
+ assert.equal(await page.locator('#responsePercent').textContent(),Number((all.length?responded/all.length*100:0).toFixed(1))+'%');
 }
 try{
  await page.goto(base+'/admin.html');assert.equal(await page.locator('#panel').isVisible(),false);
@@ -94,8 +96,8 @@ try{
  assert.equal(await guest.locator('#successTitle').textContent(),'¡Asistencia confirmada!');assert.equal(await guest.locator('#successConfirmed').textContent(),'4');assert.equal(await guest.locator('#successNames li').count(),4);
  await guest.reload();await guest.locator('#respuesta-guardada').waitFor({state:'visible'});assert.equal(await guest.locator('#successConfirmed').textContent(),'4');
  const partial=(await rpc('ver',{p_token:family.token})).data;assert.ok(partial.confirmado_en);assert.equal(partial.confirmados,4);
- await page.bringToFront();await page.evaluate(()=>window.dispatchEvent(new Event('focus')));await page.waitForFunction(()=>document.querySelectorAll('#metrics strong')[2].textContent==='4');await assertDashboard();
- assert.equal((await page.locator('#metrics .metric strong').allTextContents())[4],'2');
+ await page.bringToFront();await page.evaluate(()=>window.dispatchEvent(new Event('focus')));await page.waitForFunction(()=>document.querySelector('[data-metric=confirmados] strong').textContent==='4');await assertDashboard();
+ assert.equal(await page.locator('[data-metric=noUtilizados] strong').textContent(),'2');
  await page.locator('[data-filter=parcial]').click();assert.equal(await page.locator('#saved tr').count(),1);
  await page.locator('#saved tr').getByRole('button',{name:'Detalles',exact:true}).click();assert.ok((await page.locator('#detailsBody').textContent()).includes('Persona ficticia 4'));await page.locator('[data-close=detailsDialog]').last().click();
  await page.locator('[data-filter=todos]').click();passed('Confirmación parcial 4/6, pantalla persistente, fecha real y estadísticas actualizadas al enfocar');

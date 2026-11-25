@@ -1,2 +1,59 @@
-/* Estilos limitados a la pantalla posterior al guardado. */
-#respuesta-guardada{min-height:100dvh;background:#f6f3ec url('../images/paper-cream.webp') repeat;background-size:920px auto;padding:64px 20px;color:#154c99;text-align:center}.confirmation-shell{max-width:660px;margin:auto}.confirmation-icon{width:60px;height:60px;border-radius:50%;background:#e7eee7;border:1px solid #b9cdbd;color:#557763;display:grid;place-items:center;font-size:28px;margin:0 auto 25px}.confirmation-eyebrow{text-transform:uppercase;font-size:10px;letter-spacing:.23em;color:#6b8473}.confirmation-shell>h2{font-size:clamp(42px,7vw,62px);line-height:1.2;margin:14px 0 18px}.confirmation-shell>p:not(.confirmation-signature){font-size:14px;line-height:1.8;max-width:500px;margin-left:auto;margin-right:auto}.confirmation-ticket{margin:32px auto 24px;padding:30px;background:#fcfbf9 url('../images/paper-ivory.webp');background-size:720px auto;border:1px solid #c7d6e5;border-radius:24px;box-shadow:0 12px 40px #17335208}.confirmation-ticket h3{font-size:32px;line-height:1.2;margin:12px 0 25px;overflow-wrap:anywhere}.confirmation-counts{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #d3ddeb;border-bottom:1px solid #d3ddeb;padding:22px 0;margin:20px 0}.confirmation-counts>div+div{border-left:1px solid #d3ddeb}.confirmation-counts strong{display:block;font:500 46px/1.1 'Cormorant Garamond',Georgia,serif}.confirmation-counts span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-top:8px}.confirmation-ticket h4{font-size:12px;letter-spacing:.03em;margin-bottom:12px}#successNames{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;list-style:none;padding:0}#successNames li{padding:7px 13px;border:1px solid #c7d6e5;border-radius:24px;font-size:12px;overflow-wrap:anywhere;max-width:100%}#successExtras{margin-top:22px;text-align:left}#successExtras>div{padding:10px 0;border-top:1px solid #d3ddeb}#successExtras dt{font-size:10px;color:#6b8473;text-transform:uppercase;letter-spacing:.1em}#successExtras dd{font-size:12px;line-height:1.7;margin:3px 0 0;overflow-wrap:anywhere;white-space:pre-wrap}#successDate{font-size:10px;color:#6b8473;margin-top:20px}.confirmation-actions{display:flex;flex-direction:column;align-items:center;gap:19px}.confirmation-actions .confirm-button{margin-top:5px}.confirmation-actions>a:last-child{font-size:12px;text-decoration:underline;text-underline-offset:4px}.confirmation-signature{font-size:34px;margin:32px 0 0;color:#6b8473}@media(max-width:600px){#respuesta-guardada{padding:38px 16px}.confirmation-ticket{padding:24px 17px}.confirmation-shell>p:not(.confirmation-signature){font-size:13px}.confirmation-counts span{font-size:9px}}
+/* Solo la pantalla posterior al guardado; no cambia la invitación ni su formulario. */
+#respuesta-guardada {
+  min-height: 100dvh;
+  padding: 28px 20px;
+  background: #f6f3ec url('../images/paper-cream.webp') repeat;
+  background-size: 920px auto;
+  color: #154c99;
+  text-align: center;
+}
+.confirmation-shell { max-width: 620px; margin: auto; }
+.confirmation-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 12px;
+  border: 1px solid #b9cdbd;
+  border-radius: 50%;
+  background: #e7eee7;
+  color: #557763;
+  font-size: 24px;
+}
+.confirmation-eyebrow { color: #6b8473; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+.confirmation-shell > h2 { margin: 8px 0 10px; font-size: clamp(36px, 7vw, 46px); line-height: 1.2; }
+/* El título recibe foco programático; el anillo se conserva para controles interactivos. */
+#successTitle:focus { outline: none; }
+.confirmation-shell > p:not(.confirmation-signature) { max-width: 500px; margin: 0 auto 10px; font-size: 13px; line-height: 1.6; }
+.confirmation-ticket {
+  margin: 20px auto 18px;
+  padding: 22px;
+  border: 1px solid #c7d6e5;
+  border-radius: 18px;
+  background: #fcfbf9 url('../images/paper-ivory.webp');
+  background-size: 720px auto;
+  box-shadow: 0 6px 24px #17335208;
+}
+.confirmation-ticket h3 { margin: 7px 0 14px; font-size: 29px; line-height: 1.2; overflow-wrap: anywhere; }
+.confirmation-counts { display: grid; grid-template-columns: 1fr 1fr; margin: 14px 0; padding: 14px 0; border-block: 1px solid #d3ddeb; }
+.confirmation-counts > div + div { border-left: 1px solid #d3ddeb; }
+.confirmation-counts strong { display: block; font: 500 38px/1.1 'Cormorant Garamond', Georgia, serif; }
+.confirmation-counts span { display: block; margin-top: 5px; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+.confirmation-ticket h4 { margin-bottom: 9px; font-size: 12px; }
+#successNames { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 0; list-style: none; }
+#successNames li { max-width: 100%; padding: 5px 10px; border: 1px solid #c7d6e5; border-radius: 18px; font-size: 12px; overflow-wrap: anywhere; }
+#successExtras { margin-top: 14px; text-align: left; }
+#successExtras > div { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 10px; padding: 8px 0; border-top: 1px solid #d3ddeb; }
+#successExtras dt { padding-top: 2px; color: #6b8473; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+#successExtras dd { margin: 0; font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; white-space: pre-wrap; }
+#successDate { margin-top: 13px; color: #6b8473; font-size: 10px; }
+.confirmation-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.confirmation-actions .confirm-button { margin-top: 0; }
+.confirmation-actions > a:last-child { padding: 6px 12px; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.confirmation-signature { margin: 14px 0 0; color: #6b8473; font-size: 28px; }
+@media (max-width: 600px) {
+  #respuesta-guardada { padding: 22px 14px; }
+  .confirmation-ticket { margin-top: 16px; padding: 18px 14px; }
+  .confirmation-counts span { font-size: 9px; }
+  #successExtras > div { grid-template-columns: 65px minmax(0, 1fr); gap: 8px; }
+}
