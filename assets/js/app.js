@@ -1,6 +1,6 @@
 
 (function() {
-  let targetEventDate = new Date('2027-02-20T13:00:00-06:00');
+  let targetEventDate = new Date('2027-02-20T18:00:00-06:00');
 
   function showToast(msg) {
     const toast = document.getElementById('toastNotification');
@@ -130,7 +130,7 @@
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
         'BEGIN:VEVENT',
-        'DTSTART:20270220T190000Z',
+        'DTSTART:20270221T000000Z',
         'DTEND:20270221T050000Z',
         'SUMMARY:Mis XV Años - ' + quinceName,
         'DESCRIPTION:Ceremonia en ' + church + ' y recepción en el Salón Bellagio, ' + venue,
