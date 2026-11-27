@@ -168,9 +168,48 @@ Se generaron y revisaron capturas reales en **1440 × 900**, **1280 × 800**, **
 - `tests/admin-browser.mjs`: creación, edición, eliminación y manejo de consultas simultáneas/fallos de red.
 - `tests/excel-browser.mjs`: archivo real generado, identidad oculta, reimportación, columnas adicionales, fechas Mac y estilos.
 
-La exportación real también se abrió en Microsoft Excel y se revisó su PDF. Se encontró y corrigió un fondo negro en los estados de asistencia: los estilos diferenciales usaban un color de fondo automático; ahora usan RGB explícito. Se inspeccionaron encabezados, filas alternadas, enlaces, ID oculto, fechas y estados. Evidencia local: `test-results/excel-validado-microsoft.pdf` y `excel-validado-detalle.png`.
+La revisión anterior del PDF de Microsoft Excel permitió corregir un fondo negro en los estados de asistencia: los estilos diferenciales usaban un color de fondo automático; ahora usan RGB explícito. Esa revisión visual no acreditaba que Excel abriera el XLSX original sin reparaciones. La comprobación nativa de apertura y guardado se documenta a continuación.
 
 Los escenarios visuales y de fallos usan datos ficticios y respuestas simuladas **solo en memoria del navegador**, sin crear usuarios o registros en Supabase. La validación anterior contra Supabase permanece documentada arriba; esta revisión no modifica tablas, funciones, políticas ni credenciales. Los PNG y XLSX de prueba están ignorados por Git y se pueden regenerar con los scripts de pruebas.
+
+## Compatibilidad de XLSX con Microsoft Excel para macOS
+
+La corrección posterior a `71d843d` elimina un conflicto del generador: el XLSX declaraba un `autoFilter` en la hoja y otro en la tabla sobre el mismo rango. En el archivo original reportado ambos abarcaban `A1:L2`. Los registros de reparación disponibles de otra descarga del mismo generador y de los archivos QA anteriores indicaban que Excel eliminaba el filtro y la tabla de `/xl/tables/camila1.xml`.
+
+Con registros, ahora **solo la tabla contiene el filtro**; sin registros se conserva el filtro de la hoja. No se modificaron estilos, hipervínculos, IDs ocultos, columnas, respuestas, lógica de importación ni datos de Supabase. Se actualizó únicamente el hash del JavaScript en `admin.html` para que Chrome reciba el generador corregido.
+
+Se inspeccionaron XML, relaciones y destinos internos, encabezados/rangos de tabla, filtros, índices de estilos, formatos condicionales, hipervínculos e identificadores. Una copia de diagnóstico del original, con solo el filtro de hoja eliminado, conservó su tabla al abrirse y guardarse en Excel. El original de Downloads permanece intacto. No se obtuvo un registro nuevo con el nombre exacto de ese original: al intentar reabrirlo, el organizador no observó nuevamente el aviso. Los registros citados corresponden a las otras exportaciones, no a ese archivo.
+
+### Validación nativa
+
+Se generaron estos siete archivos desde los controles reales del panel, con datos ficticios aislados en memoria, y se abrieron directamente en **Microsoft Excel para macOS 16.113.4**:
+
+| Escenario | Apertura del original | Guardado por Excel |
+| --- | --- | --- |
+| Plantilla vacía | Sin avisos | Correcto |
+| Archivo devuelto después de importar | Sin avisos | Tabla, enlaces e ID oculto conservados |
+| Exportación de un invitado | Sin avisos | Tabla, enlace e ID oculto conservados |
+| Exportación de varios invitados | Sin avisos | Tabla, enlaces e IDs ocultos conservados |
+| Confirmados, parciales, pendientes y rechazados | Sin avisos | Estados, asistentes, respuestas y fechas conservados |
+| Familias con nombres iguales | Sin avisos | Identidades distintas conservadas |
+| Reimportación de un archivo exportado | Sin avisos | Sin duplicados ni cambios de identidad |
+
+La ausencia de avisos de los siete originales fue confirmada manualmente por el organizador, que eligió revisar los diálogos de Excel. La automatización nativa comprobó tablas, hipervínculos y columnas ocultas, guardó copias independientes y verificó que no aparecieran nuevos registros de reparación. Las copias guardadas conservaron los valores y destinos de enlaces. Se activó un hipervínculo desde Excel antes y después del guardado. La reimportación desde el panel de una copia guardada por Excel mantuvo dos familias homónimas, sus IDs, tokens y notas adicionales, sin duplicarlas; el archivo resultante también pasó apertura y guardado nativos. No se crearon registros de prueba en Supabase.
+
+Para repetir la prueba, con el servidor local activo y la carpeta de resultados libre de copias de una ejecución anterior:
+
+```bash
+node tests/excel-browser.mjs
+node tests/excel-panel-compat.mjs
+python3 tests/excel-native-macos.py
+# Revisar los avisos directamente en Excel antes de dar la apertura por aprobada.
+node tests/excel-panel-compat.mjs --verify-saved
+python3 tests/excel-native-macos.py --reimported
+```
+
+Los scripts nativos requieren macOS, Microsoft Excel y permiso de Automatización. No sobrescriben los originales: guardan copias con sufijo `-excel.xlsx` y se detienen si esas copias ya existen. El informe deja la revisión de avisos como pendiente hasta la comprobación humana; abrir mediante una librería o convertir a PDF no reemplaza esa comprobación. Los XLSX, manifiestos e informes están en `test-results/excel-compat/`, ignorados por Git. `excel-browser.mjs` incluye una regresión que exige cero filtros de hoja y un filtro de tabla en una exportación con registros.
+
+La corrección se aplica a las nuevas descargas. Para distribuir enlaces, vuelve a exportar desde el panel actualizado; el archivo antiguo no se modifica automáticamente.
 
 ## GitHub y publicación
 

@@ -288,7 +288,11 @@
     for(const [i,entry]of entries.entries()){const row=book.rows.find(r=>+r.getAttribute('r')===entry.fila);row.setAttribute('ht','32');row.setAttribute('customHeight','1');for(let c=1;c<=right;c++){let cell=children(row,'c').find(x=>cellCol(x)===c);if(!cell)cell=writeCell(row,c,'');const key=Object.keys(book.cols).find(k=>book.cols[k]===c);if(!key)continue;const kind=key==='enlace'?'link':key==='confirmado_en'?'date':['boletos','confirmados'].includes(key)?'number':'text';cell.setAttribute('s',ids[kind==='text'?(i%2?'alternate':'text'):kind+(i%2?'Alt':'')]);}}
     let dim=first(root,'dimension');if(!dim){dim=newEl(root,'dimension');root.insertBefore(dim,views);}dim.setAttribute('ref','A1:'+colName(right)+bottom);
     for(const tag of ['autoFilter','conditionalFormatting','tableParts'])children(root,tag).forEach(n=>n.remove());
-    const filter=newEl(root,'autoFilter');filter.setAttribute('ref',range);appendOrdered(root,filter,['sortState','dataConsolidate','customSheetViews','mergeCells','phoneticPr','conditionalFormatting','dataValidations','hyperlinks','printOptions','pageMargins','pageSetup','headerFooter','drawing','extLst']);
+    // Excel no admite un AutoFilter de hoja superpuesto al filtro de una tabla.
+    // Con registros, la tabla creada abajo es la única propietaria del filtro.
+    if(!entries.length){
+      const filter=newEl(root,'autoFilter');filter.setAttribute('ref',range);appendOrdered(root,filter,['sortState','dataConsolidate','customSheetViews','mergeCells','phoneticPr','conditionalFormatting','dataValidations','hyperlinks','printOptions','pageMargins','pageSetup','headerFooter','drawing','extLst']);
+    }
     if(entries.length){const conditional=newEl(root,'conditionalFormatting');conditional.setAttribute('sqref',colName(book.cols.estado)+(header+1)+':'+colName(book.cols.estado)+bottom);['Confirmado','Confirmación parcial','Pendiente','No asiste'].forEach((label,i)=>{const rule=newEl(conditional,'cfRule');rule.setAttribute('type','cellIs');rule.setAttribute('operator','equal');rule.setAttribute('priority',i+1);rule.setAttribute('dxfId',ids.states[i]);const formula=newEl(rule,'formula');formula.textContent='"'+label+'"';rule.append(formula);conditional.append(rule);});appendOrdered(root,conditional,['dataValidations','hyperlinks','printOptions','pageMargins','pageSetup','headerFooter','drawing','extLst']);}
     const types=await part(book.zip,'[Content_Types].xml');
     // Reemplaza las tablas de la hoja de invitados, sin tocar tablas de otras hojas.
